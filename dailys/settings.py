@@ -29,9 +29,11 @@ SECRET_KEY = 'django-insecure-199x-t5m@-^5xf=^9&=+uf9kvj%)wfaref6+kkivui6%i%%526
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = [
+ALLOWED_HOSTS = ["127.0.0.1", '.herokuapp.com']
+
+CSRF_TRUSTED_ORIGINS = [
     "https://*.127.0.0.1",
-    '127.0.0.1',
+    "https://*.codeinstitute-ide.net/",
     "https://*.herokuapp.com"
 ]
 
@@ -93,6 +95,8 @@ WSGI_APPLICATION = 'dailys.wsgi.application'
 DATABASES = {
     'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
 }
+
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
