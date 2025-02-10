@@ -37,6 +37,10 @@ Dailys combines a sleek interface with a social component to make tracking your 
 
 ### Database design
 
+**Habit Model ERD**
+
+![habit erd](documentation/erd/habit-erd.png)
+
 ### User Features
 
 ## UI / UX
