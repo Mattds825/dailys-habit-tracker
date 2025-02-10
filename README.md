@@ -62,3 +62,5 @@ Dailys combines a sleek interface with a social component to make tracking your 
 - Git/Github - Version Control
 
 ### Resources 
+
+- CodeInstitute blog project [repo](https://github.com/Code-Institute-Solutions/blog) and walkthrough used as guidance
