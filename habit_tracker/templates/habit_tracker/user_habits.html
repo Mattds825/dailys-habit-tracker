@@ -11,21 +11,24 @@
 
 <!-- index.html content starts here -->
 <div class="container-fluid h-100">
-    <div class="text-center mt-3">
+    <!-- <div class="text-center mt-3">
         <a href="#" class="btn btn-primary btn-sm">Search for other users</a>
-    </div>
+    </div> -->
+
+    <p>user: {{ user }}</p>
+
     <div class="row">        
         <!-- List of Habits -->
         <div class="col-12 mt-3">
             <div class="row">
-                {% for habit in habit_list %}
+                {% for habit in habits %}
                 <!-- Habit & calendar -->
                 <div class="col-8">
                     <div class="card mb-4">
                         <div class="card-body">
                             <div class="image-container">
                                 <div class="image-flash">
-                                    <p class="author">User: <a href="{% url 'user_habits' habit.user %}">{{ habit.user }}</a></p>
+                                    <p class="author">User: {{ habit.user }}</a></p>
                                 </div>
                             </div>
                             <h2 class="card-title">{{ habit.title }}</h2>
