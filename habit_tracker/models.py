@@ -14,12 +14,21 @@ class Habit(models.Model):
     updated_on = models.DateTimeField(auto_now=True)
     color = models.IntegerField(choices=CHOSEN_COLOR, default=0)
     visibility = models.IntegerField(choices=VIS_STATUS, default=0)
+    
+    class Meta:
+        ordering = ["-created_on"]
 
     def __str__(self):
-        return self.title
+        return f"{self.title} - {self.user}"
     
     
 class CheckIn(models.Model):    
     habit = models.ForeignKey(Habit, on_delete=models.CASCADE, related_name="check_ins")
     checked_in_on = models.DateTimeField(auto_now_add=True)
     notes = models.TextField()
+    
+    class Meta:
+        ordering = ["-checked_in_on"]
+    
+    def __str__(self):
+        return f"{self.habit} - {self.checked_in_on}"
