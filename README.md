@@ -32,14 +32,19 @@ Dailys combines a sleek interface with a social component to make tracking your 
 
 ### Django Structure
 
-- dailys project
-- habit-tracker app
+- root
+    - dailys project
+    - habit-tracker app
 
 ### Database design
 
 **Habit Model ERD**
 
 ![habit erd](documentation/erd/habit-erd.png)
+
+**CheckIn Model ERD**
+
+![checkIn erd](documentation/erd/check-in-erd.png)
 
 ### User Features
 
