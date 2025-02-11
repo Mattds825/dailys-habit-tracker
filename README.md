@@ -35,6 +35,8 @@ Dailys combines a sleek interface with a social component to make tracking your 
 - root
     - dailys project
     - habit-tracker app
+        - templates
+    - templates
 
 ### Database design
 
@@ -69,6 +71,7 @@ Dailys combines a sleek interface with a social component to make tracking your 
 - PostgreSQL - Database
 - Heroku - Hosting
 - Git/Github - Version Control
+- django SummerNote - styling django admin panel
 
 ### Resources 
 
