@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browse Habits</title>
+</head>
+<body>
+    <h1>Posts list</h1>
+    {% for habit in object_list %}
+    <h2>{{habit.title}}</h2>
+    <p>User: {{habit.user}}</p>
+    {% endfor %}    
+</body>
+</html>
