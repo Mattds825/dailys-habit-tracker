@@ -1,6 +1,6 @@
 # Dailys Habit Tracker
 
-A habit tracker for you daily commitments to help you keep on top of your game.
+A habit tracker for your daily commitments to help you keep on top of your game.
 Dailys combines a sleek interface with a social component to make tracking your habit as easy and enjoyable as possible.
 
 ## Project Goals
@@ -72,6 +72,7 @@ Dailys combines a sleek interface with a social component to make tracking your 
 ### Technologies 
 
 - HTML/CSS/JS - Frontend and templates
+- Bootstrap - CSS library
 - Python, Django - Backend 
 - PostgreSQL - Database
 - Heroku - Hosting
