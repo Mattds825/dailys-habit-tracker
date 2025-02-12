@@ -17,6 +17,8 @@ Dailys combines a sleek interface with a social component to make tracking your 
 
 ### Manage Habits as Site Admin
 
+### View a landing page that gives info about the about app and its features
+
 ### View a paginated list of habits
 
 #### Acceptance Criteria
@@ -36,7 +38,10 @@ Dailys combines a sleek interface with a social component to make tracking your 
     - dailys project
     - habit-tracker app
         - templates
+    - landing
+        - templates
     - templates
+    
 
 ### Database design
 
