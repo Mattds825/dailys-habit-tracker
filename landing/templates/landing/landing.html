@@ -5,7 +5,7 @@
   <div class="row">    
     <div class="col-8">
       <!-- Title goes between these h2 tags -->
-      <h2>{{ about.heading }}</h2>
+      <h1>{{ about.heading }}</h1>
       <!-- Content goes directly underneath this -->
       {{ about.subheading | safe }}
     </div>
@@ -13,6 +13,13 @@
   <div class="row">
     <div class="col text-right">
       <!-- Updated on field goes in here -->
+
+      <h2>Features: </h2>
+      
+      {% for feature in features %}
+        <h3>{{ feature.feature_title }}</h3>
+        {{ feature.feature_description | safe}}
+      {% endfor%}
 
       <p class="text-end"><em>Updated on: {{ about.updated_on }}</em></p>
     </div>
