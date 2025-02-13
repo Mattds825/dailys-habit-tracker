@@ -7,6 +7,9 @@
 \-->
 {% extends "base.html" %}
 
+{% load static %}
+{% load crispy_forms_tags %}
+
 {% block content %}
 
 <!-- index.html content starts here -->
@@ -19,8 +22,17 @@
 
     {% if user.is_authenticated and user.username == h_user %}
     <p>this is you profile {{ user.username }}</p>
+    <form id="habitForm" method="post"
+    style="display: none;">
+        {{ habit_form | crispy }}
+        {% csrf_token %}
+        <button id="habitFormSubmitBtn" type="submit"
+        class="btn btn-primary btn-sm">Submit</button>
+        <button id="habitFormCancelBtn"
+        class="btn btn-warning btn-sm" formnovalidate >Cancel</button>
+    </form>
     <div class="text-center mt-3">
-        <a href="#" class="btn btn-primary btn-sm">Create new habit</a>
+        <a href="#" id="createHabitBtn" class="btn btn-primary btn-sm">Create new habit</a>
     </div>
     {% endif %}
 

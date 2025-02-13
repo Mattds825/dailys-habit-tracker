@@ -78,6 +78,7 @@ Dailys combines a sleek interface with a social component to make tracking your 
 - Heroku - Hosting
 - Git/Github - Version Control
 - django SummerNote - styling django admin panel
+- django crispy forms - for handling and creating forms
 
 ### Resources 
 

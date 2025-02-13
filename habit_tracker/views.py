@@ -1,6 +1,8 @@
 from django.shortcuts import render, get_list_or_404
 from django.views import generic
+from django.contrib import messages
 from .models import Habit, CheckIn
+from .forms import HabitForm
 
 # Create your views here.
 
@@ -19,6 +21,16 @@ def user_habits(request, user):
     
     queryset = Habit.objects.all()
     habits = [h for h in queryset if h.user.username == user]
+    
+    if request.method == "POST":
+        habit_form = HabitForm(data=request.POST)
+        if habit_form.is_valid():
+            new_habit = habit_form.save(commit=False)
+            new_habit.user = request.user
+            new_habit.save()
+            messages.add_message(request, messages.SUCCESS, "Habit added successfully")
+    
+    habit_form = HabitForm()
    
     # get check-ins for each habit with dates
     for h in habits:
@@ -30,6 +42,7 @@ def user_habits(request, user):
     # user = get_list_or_404(queryset, user=user)
     return render(request, 'habit_tracker/user_habits.html', 
                   {'habits': habits,
-                   'h_user': user
+                   'h_user': user,
+                    'habit_form': habit_form
                    }
             )    
