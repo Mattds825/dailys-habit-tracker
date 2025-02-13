@@ -47,6 +47,34 @@ def user_habits(request, user):
                     'habit_form': habit_form
                    }
             )    
+    
+def edit_habit(request, user, habit_id):
+    """
+    edits a habit and redirects to user_habits
+    """
+    queryset = Habit.objects.all()
+    habits = [h for h in queryset if h.user.username == user]
+    habit = get_object_or_404(Habit, id=habit_id)
+    
+    print("edit habit")
+    
+    if habit.user == request.user:
+        if request.method == "POST":
+            habit_form = HabitForm(data=request.POST, instance=habit)
+            if habit_form.is_valid():
+                habit_form.save()
+                messages.add_message(request, messages.SUCCESS, "Habit updated successfully")
+                return HttpResponseRedirect(reverse("user_habits", args=[user]))
+        else:
+            habit_form = HabitForm(instance=habit)
+            
+        return render(request, 'habit_tracker/edit_habit.html', 
+                      {'habit_form': habit_form,
+                       'habit': habit
+                       }
+                )
+    else:
+        return HttpResponseRedirect(reverse("user_habits", args=[user]))
 
 def delete_habit(request, user, habit_id):
     """

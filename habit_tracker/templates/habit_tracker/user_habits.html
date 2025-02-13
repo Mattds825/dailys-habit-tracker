@@ -80,7 +80,9 @@
                         </div>
                         <div class="col">
                             {% if user.is_authenticated and user.username == h_user %}
-                            <a href="#" class="btn btn-primary btn-sm">edit</a>
+                            <button class="btn btn-primary btn-sm btn-edit" habit_id="{{ habit.id }}" 
+                            habit_name="{{ habit.title }}" habit_description="{{ habit.description }}" habit_color="{{ habit.color }}" 
+                            habit_visibility="{{ habit.visibility }}" data_user="{{ user.username }}">edit</button>
                             <button class="btn btn-danger btn-sm btn-delete" habit_id="{{ habit.id }}">delete</button>
                             {% else %}
                             <p>React:</p>
