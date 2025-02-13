@@ -1,6 +1,7 @@
-from django.shortcuts import render, get_list_or_404
+from django.shortcuts import render, get_list_or_404, reverse, get_object_or_404
 from django.views import generic
 from django.contrib import messages
+from django.http import HttpResponseRedirect
 from .models import Habit, CheckIn
 from .forms import HabitForm
 
@@ -46,3 +47,18 @@ def user_habits(request, user):
                     'habit_form': habit_form
                    }
             )    
+
+def delete_habit(request, user, habit_id):
+    """
+    delete a habit
+    """
+    queryset = Habit.objects.all()
+    habits = [h for h in queryset if h.user.username == user]
+    habit = get_object_or_404(Habit, id=habit_id)
+    
+    if habit.user == request.user:
+        habit.delete()
+        messages.add_message(request, messages.SUCCESS, "Habit deleted successfully")
+        
+    return HttpResponseRedirect(reverse("user_habits", args=[user]))
+    
