@@ -15,7 +15,14 @@
         <a href="#" class="btn btn-primary btn-sm">Search for other users</a>
     </div> -->
 
-    <p>user: {{ user }}</p>
+    <p>user: {{ h_user }}</p>
+
+    {% if user.is_authenticated and user.username == h_user %}
+    <p>this is you profile {{ user.username }}</p>
+    <div class="text-center mt-3">
+        <a href="#" class="btn btn-primary btn-sm">Create new habit</a>
+    </div>
+    {% endif %}
 
     <div class="row">        
         <!-- List of Habits -->
@@ -50,13 +57,18 @@
                             <p>num</p>
                         </div>
                         <div class="col">
-                            React:
+                            {% if user.is_authenticated and user.username == h_user %}
+                            <a href="#" class="btn btn-primary btn-sm">edit</a>
+                            <a href="#" class="btn btn-danger btn-sm">delete</a>
+                            {% else %}
+                            <p>React:</p>
                             <div class="btn-group" role="group" aria-label="Basic example">
                                 <button type="button" class="btn btn-outline-primary">👏</button>
                                 <button type="button" class="btn btn-outline-primary">👍</button>
                                 <button type="button" class="btn btn-outline-primary">♥️</button>
                                 <button type="button" class="btn btn-outline-primary">🏆</button>                                
-                            </div>                        
+                            </div> 
+                            {% endif %}                       
                         </div>
                     </div>                    
                 </div>

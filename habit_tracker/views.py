@@ -30,6 +30,6 @@ def user_habits(request, user):
     # user = get_list_or_404(queryset, user=user)
     return render(request, 'habit_tracker/user_habits.html', 
                   {'habits': habits,
-                   'user': user
+                   'h_user': user
                    }
             )    
