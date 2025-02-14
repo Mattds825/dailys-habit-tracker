@@ -2,6 +2,8 @@ from django.shortcuts import render, get_list_or_404, reverse, get_object_or_404
 from django.views import generic
 from django.contrib import messages
 from django.http import HttpResponseRedirect
+from django.db.models import Count, Q
+from django.utils.timezone import now
 from .models import Habit, CheckIn
 from .forms import HabitForm, CheckInForm
 
@@ -22,6 +24,7 @@ def user_habits(request, user):
     
     queryset = Habit.objects.all()
     habits = [h for h in queryset if h.user.username == user]
+    today = now().date()
     
     if request.method == "POST":
         habit_form = HabitForm(data=request.POST)        
@@ -33,6 +36,11 @@ def user_habits(request, user):
     
     habit_form = HabitForm()
     checkin_form = CheckInForm()
+    
+    # annotate habits with check_ins_today count
+    habits = Habit.objects.annotate(
+        check_ins_today=Count('check_ins', filter=Q(check_ins__checked_in_on__date=today))
+    ).order_by('-created_on')
    
     # get check-ins for each habit with dates
     for h in habits:        

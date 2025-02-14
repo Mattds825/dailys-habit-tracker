@@ -49,7 +49,10 @@
                                 <div class="image-flash d-flex justify-content-between">
                                     <p class="author">User: {{ habit.user }}</p>
                                     <div class="d-flex">
-                                        
+                                        <p class="my-auto mx-3">
+                                            total : {{ habit.check_ins.count }}
+                                            | today :  {{ habit.check_ins_today }}
+                                        </p>
                                         <button data-habit-id="{{ habit.id }}" type="button" class="btn btn-outline-success btn-sm btn-checkin">Check In</button>
                                     </div>                                   
                                 </div>
