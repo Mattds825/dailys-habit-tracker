@@ -1,3 +1,13 @@
+/**
+ * Create by Matthew G Da Silva 13/02/2025
+ * 
+ * File is used to assist in function of the user_habits page
+ * it has function to create a new habit, edit a habit, delete a habit and check in a habit
+ * it also control the display of the habit form and the check in form
+ * 
+ * some of the code is from the Code Institute's Blog project
+ */
+
 const createHabitBtn = document.getElementById("createHabitBtn");
 const habitForm = document.getElementById("habitForm");
 const habitFormCancelBtn = document.getElementById("habitFormCancelBtn");

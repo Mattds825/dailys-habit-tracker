@@ -1,3 +1,37 @@
 body {
     background-color: #F9FAFC;
 }
+
+.cal-controls {
+    margin-bottom: 10px;
+}
+.calHeatmap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    max-width: 800px;
+}
+.month {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.month-name {
+    margin-bottom: 5px;
+    font-size: 14px;
+    text-align: center;
+}
+.days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+}
+.day {
+    width: 12px;
+    height: 12px;
+    background-color: #ebedf0;
+}
+.day.level-1 { background-color: #c6e48b; }
+.day.level-2 { background-color: #7bc96f; }
+.day.level-3 { background-color: #239a3b; }
+.day.level-4 { background-color: #196127; }
