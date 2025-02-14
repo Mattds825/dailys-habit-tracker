@@ -1,4 +1,4 @@
-from .models import Habit
+from .models import Habit, CheckIn
 from django import forms
 
 
@@ -11,4 +11,12 @@ class HabitForm(forms.ModelForm):
             'description': forms.Textarea(attrs={'class': 'form-control'}),
             'color': forms.Select(attrs={'class': 'form-select'}),
             'visibility': forms.Select(attrs={'class': 'form-select'})
+        }
+
+class CheckInForm(forms.ModelForm):
+    class Meta:
+        model = CheckIn
+        fields = ['notes']
+        widgets = {
+            'notes': forms.Textarea(attrs={'class': 'form-control'}),            
         }

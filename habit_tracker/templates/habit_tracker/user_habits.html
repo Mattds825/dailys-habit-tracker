@@ -48,7 +48,10 @@
                             <div class="image-container">
                                 <div class="image-flash d-flex justify-content-between">
                                     <p class="author">User: {{ habit.user }}</p>
-                                    <button id="checkInBtn" type="button" class="btn btn-outline-success btn-sm">Check In</button>                                   
+                                    <div class="d-flex">
+                                        
+                                        <button data-habit-id="{{ habit.id }}" type="button" class="btn btn-outline-success btn-sm btn-checkin">Check In</button>
+                                    </div>                                   
                                 </div>
                             </div>
                             <h2 class="card-title">
@@ -132,12 +135,12 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title"
-          id="deleteModalLabel">Delete comment?</h5>
+          id="deleteModalLabel">Delete Habit?</h5>
         <button type="button" class="btn-close"
           data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        Are you sure you want to delete your comment?
+        Are you sure you want to delete this habit?
         This action cannot be undone.
       </div>
       <div class="modal-footer">
@@ -148,6 +151,33 @@
       </div>
     </div>
   </div>
+</div>
+
+<!-- Check In confirmation modal -->
+<div class="modal fade" id="checkInModal" tabindex="-1"
+aria-labelledby="checkInModalLabel" aria-hidden="true">
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title"
+        id="checkInModalLabel">Check In?</h5>
+      <button type="button" class="btn-close"
+        data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+        <h6>Any Notes</h6>
+      <!-- <input type="text" class="form-control" id="checkInNotes" name="checkInNotes" placeholder="Notes"> -->
+       <form id="checkInForm" method="post">
+        {{ checkin_form | crispy }}
+        {% csrf_token %}
+        <button type="button" class="btn btn-secondary btn-sm"
+        data-bs-dismiss="modal" formnovalidate>Close</button>
+        <button id="checkInConfirm" type="submit"
+        class="btn btn-success btn-sm">Submit</button>                
+       </form>
+    </div>
+  </div>
+</div>
 </div>
 
 <!-- explore_habits.html content ends here -->

@@ -8,6 +8,11 @@ const deleteConfirm = document.getElementById("deleteConfirm");
 
 const editButtons = document.getElementsByClassName("btn-edit");
 
+const checkInButtons = document.getElementsByClassName("btn-checkin");
+const checkInModal = new bootstrap.Modal(document.getElementById("checkInModal"));
+const checkInConfirm = document.getElementById("checkInConfirm");
+const checkInForm = document.getElementById("checkInForm");
+
 if (
   createHabitBtn === null ||
   habitForm === null ||
@@ -72,4 +77,17 @@ for(let button of editButtons) {
 
         habitForm.setAttribute("action", `/${username}/edit_habit/${habitId}/`);
     });
+}
+
+
+for (let button of checkInButtons) {
+  button.addEventListener("click", (e) => {
+    let habitId = e.target.getAttribute("data-habit-id");    
+
+    console.log("clicked checkin btn", habitId);
+
+    // checkInConfirm.href = `check_in/${habitId}`;
+    checkInModal.show();
+    checkInForm.setAttribute("action", `check_in/${habitId}/`);
+  });
 }
