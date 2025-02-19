@@ -7,6 +7,8 @@
 \-->
 {% extends "base.html" %}
 
+{% load static %}
+
 {% block content %}
 
 <!-- index.html content starts here -->
@@ -47,13 +49,25 @@
                             <p>num</p>
                         </div>
                         <div class="col">
-                            React:
+                            <p>React:</p>
                             <div class="btn-group" role="group" aria-label="Basic example">
-                                <button type="button" class="btn btn-outline-primary">👏</button>
-                                <button type="button" class="btn btn-outline-primary">👍</button>
-                                <button type="button" class="btn btn-outline-primary">♥️</button>
-                                <button type="button" class="btn btn-outline-primary">🏆</button>                                
-                            </div>                        
+                                <button data-habit-id="{{ habit.id }}"  data-habit-user="{{ habit.user }}" data-user="{{ user.username }}" 
+                                data-reaction-type="0" type="button" class="btn btn-outline-primary reactBtn">
+                                    👏
+                                </button>
+                                <button data-habit-id="{{ habit.id }}"  data-habit-user="{{ habit.user }}" data-user="{{ user.username }}" 
+                                data-reaction-type="1" type="button" class="btn btn-outline-primary reactBtn">
+                                    👍
+                                </button>
+                                <button data-habit-id="{{ habit.id }}"  data-habit-user="{{ habit.user }}" data-user="{{ user.username }}" 
+                                data-reaction-type="2" type="button" class="btn btn-outline-primary reactBtn">
+                                    ♥️
+                                </button>
+                                <button data-habit-id="{{ habit.id }}"  data-habit-user="{{ habit.user }}" data-user="{{ user.username }}" 
+                                data-reaction-type="3" type="button" class="btn btn-outline-primary">
+                                    🏆
+                                </button>                                
+                            </div>                    
                         </div>
                     </div>                    
                 </div>
@@ -86,5 +100,37 @@
     {% endif %}
 </div>
 
+
+<!-- Reaction In confirmation modal -->
+<div class="modal fade" id="reactModal" tabindex="-1"
+aria-labelledby="reactModalLabel" aria-hidden="true">
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title"
+        id="reactModalLabel">Confirm Reaction</h5>
+      <button type="button" class="btn-close"
+        data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">        
+      <!-- <input type="text" class="form-control" id="checkInNotes" name="checkInNotes" placeholder="Notes"> -->
+       <form id="reactForm" method="post">
+        {% csrf_token %}
+        <button type="button" class="btn btn-secondary btn-sm"
+        data-bs-dismiss="modal" formnovalidate>Cancel</button>
+        <button id="reactConfirm" type="submit"
+        class="btn btn-success btn-sm">Confirm</button>                
+       </form>
+    </div>
+  </div>
+</div>
+</div>
+
 <!-- explore_habits.html content ends here -->
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static 'js/calendarHeatmap.js' %}"></script>
+    <script src="{% static 'js/reactionsElement.js' %}"></script>
+    <script src="{% static 'js/userReaction.js' %}"></script>
 {% endblock %}

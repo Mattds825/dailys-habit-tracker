@@ -7,4 +7,5 @@ urlpatterns = [
     path('<str:user>/delete_habit/<int:habit_id>/', views.delete_habit, name='delete_habit'),
     path('<str:user>/edit_habit/<int:habit_id>/', views.edit_habit, name='edit_habit'),
     path('<str:user>/check_in/<int:habit_id>/', views.check_in, name='check_in'),
+    path('user_reaction/<int:habit_id>/<int:reaction_type>', views.user_reaction, name='user_reaction'),
 ]

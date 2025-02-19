@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.db.models import Count, Q
 from django.utils.timezone import now
-from .models import Habit, CheckIn
+from .models import Habit, CheckIn, Reaction
 from .forms import HabitForm, CheckInForm
 
 # Create your views here.
@@ -41,8 +41,15 @@ def user_habits(request, user):
     # print(request.user)
     
     queryset = Habit.objects.all()
-    habits = [h for h in queryset if h.user.username == user]
-    today = now().date()
+    today = now().date()   
+    # annotate habits with check_ins_today count
+    habits = Habit.objects.annotate(
+        check_ins_today=Count('check_ins', filter=Q(check_ins__checked_in_on__date=today))
+    ).order_by('-created_on')
+    
+    # remove habits that are not associated with the user
+    habits = [h for h in habits if h.user.username == user]
+    
     
     if request.method == "POST":
         habit_form = HabitForm(data=request.POST)        
@@ -54,18 +61,6 @@ def user_habits(request, user):
     
     habit_form = HabitForm()
     checkin_form = CheckInForm()
-    
-    # annotate habits with check_ins_today count
-    habits = Habit.objects.annotate(
-        check_ins_today=Count('check_ins', filter=Q(check_ins__checked_in_on__date=today))
-    ).order_by('-created_on')
-   
-    # get check-ins for each habit with dates
-    for h in habits:        
-        if h.check_ins.all():
-            print(h.check_ins.all().count())
-            for c in h.check_ins.all():
-                print(c.checked_in_on.date())
             
     
     # user = get_list_or_404(queryset, user=user)
@@ -73,7 +68,7 @@ def user_habits(request, user):
                   {'habits': habits,
                    'h_user': user,
                     'habit_form': habit_form,
-                    'checkin_form': checkin_form
+                    'checkin_form': checkin_form,                    
                    }
             )    
     
@@ -139,3 +134,25 @@ def check_in(request, user, habit_id):
         
     return HttpResponseRedirect(reverse("user_habits", args=[user]))
     
+    
+def user_reaction(request, habit_id, reaction_type):
+    """
+    add a reaction to a habit
+    """
+    queryset = Habit.objects.all()    
+    habit = get_object_or_404(Habit, id=habit_id)
+    
+    print("reaction")
+    
+    # check if reaction is from the user
+    if habit.user != request.user:
+        reaction = Reaction.objects.create(            
+            reaction_type=reaction_type,
+            to_habit=habit,
+            from_user=request.user
+        )
+        reaction.save()
+        messages.add_message(request, messages.SUCCESS, "Reaction added successfully")
+    
+    # return to explore page
+    return HttpResponseRedirect(reverse("explore"))

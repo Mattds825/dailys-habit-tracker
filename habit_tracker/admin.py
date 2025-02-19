@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Habit, CheckIn
+from .models import Habit, CheckIn, Reaction
 from django_summernote.admin import SummernoteModelAdmin
 
 # Register your models here.
@@ -14,3 +14,9 @@ class CheckInAdmin(admin.ModelAdmin):
     list_display = ('habit', 'checked_in_on')
     search_fields = ('habit', 'notes')
     list_filter = ('habit', 'checked_in_on')
+
+@admin.register(Reaction)
+class ReactionAdmin(admin.ModelAdmin):
+    list_display = ('reaction_type', 'to_habit', 'from_user', 'is_seen', 'date_created')
+    search_fields = ('reaction_type', 'to_habit', 'from_user')
+    list_filter = ('reaction_type', 'to_habit', 'from_user', 'is_seen', 'date_created')

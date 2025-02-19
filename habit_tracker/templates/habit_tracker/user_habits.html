@@ -21,7 +21,9 @@
     <p>user: {{ h_user }}</p>
 
     {% if user.is_authenticated and user.username == h_user %}
-    <p>this is you profile {{ user.username }}</p>
+    <button type="button" class="btn btn-secondary">
+        Notifications <span class="bg-danger p-1 rounded-circle">x</span>
+    </button>
     <form id="habitForm" method="post"
     style="display: none;">
         {{ habit_form | crispy }}
@@ -53,7 +55,9 @@
                                             total : {{ habit.check_ins.count }}
                                             | today :  {{ habit.check_ins_today }}
                                         </p>
+                                        {% if user.is_authenticated and user.username == h_user %}
                                         <button data-habit-id="{{ habit.id }}" type="button" class="btn btn-outline-success btn-sm btn-checkin">Check In</button>
+                                        {% endif %}
                                     </div>                                   
                                 </div>
                             </div>
@@ -73,7 +77,12 @@
                                 <p class="d-none"> {{ checkin.checked_in_on.date }} </p>
                                 {% endfor %}
                             </div>                              
-                            </p>
+                            <hr />
+                            <div id="reactionsEl-{{ habit.id }}" class="reactionsEl d-flex" data-reactions="{{ habit.reactions.all }}">                                
+                                {% for reaction in habit.reactions.all %}                            
+                                <p>{{ reaction.reaction_type }}</p>
+                                {% endfor %}
+                            </div>                            
                         </div>
                     </div>
                 </div>
@@ -98,16 +107,28 @@
                             {% else %}
                             <p>React:</p>
                             <div class="btn-group" role="group" aria-label="Basic example">
-                                <button type="button" class="btn btn-outline-primary">👏</button>
-                                <button type="button" class="btn btn-outline-primary">👍</button>
-                                <button type="button" class="btn btn-outline-primary">♥️</button>
-                                <button type="button" class="btn btn-outline-primary">🏆</button>                                
-                            </div> 
+                                <button data-habit-id="{{ habit.id }}"  data-habit-user="{{ habit.user }}" data-user="{{ user.username }}" 
+                                data-reaction-type="0" type="button" class="btn btn-outline-primary reactBtn">
+                                    👏
+                                </button>
+                                <button data-habit-id="{{ habit.id }}"  data-habit-user="{{ habit.user }}" data-user="{{ user.username }}" 
+                                data-reaction-type="1" type="button" class="btn btn-outline-primary reactBtn">
+                                    👍
+                                </button>
+                                <button data-habit-id="{{ habit.id }}"  data-habit-user="{{ habit.user }}" data-user="{{ user.username }}" 
+                                data-reaction-type="2" type="button" class="btn btn-outline-primary reactBtn">
+                                    ♥️
+                                </button>
+                                <button data-habit-id="{{ habit.id }}"  data-habit-user="{{ habit.user }}" data-user="{{ user.username }}" 
+                                data-reaction-type="3" type="button" class="btn btn-outline-primary">
+                                    🏆
+                                </button>                                
+                            </div>                 
                             {% endif %}                       
                         </div>
                     </div>                    
                 </div>
-                <!-- Data and reaction -->
+                <!-- ./ Data and reaction -->
                 {% if forloop.counter|divisibleby:3 %}
             </div>            
             <div class="row">
@@ -188,9 +209,11 @@ aria-labelledby="checkInModalLabel" aria-hidden="true">
 </div>
 </div>
 
-<!-- explore_habits.html content ends here -->
+<!-- user_habits.html content ends here -->
 {% endblock %}
 
-{% block userHabitsScripts %}
+{% block scripts %}
     <script src="{% static 'js/calendarHeatmap.js' %}"></script>
+    <script src="{% static 'js/reactionsElement.js' %}"></script>
+    <script src="{% static 'js/userReaction.js' %}"></script>
 {% endblock %}
