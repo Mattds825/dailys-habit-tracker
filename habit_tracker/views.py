@@ -13,6 +13,24 @@ class BrowseHabits(generic.ListView):
     queryset = Habit.objects.all().filter(visibility=2)
     template_name = "habit_tracker/explore_habits.html"
     paginate_by = 5
+    
+def explore_habits(request):
+    """
+    display all public habits
+    that are not associated with the logged in user
+    """
+    queryset = Habit.objects.all().filter(visibility=2)
+    
+    # only show public habits that are not associated with the logged in user
+    if request.user.is_authenticated:
+        queryset = queryset.exclude(user=request.user)
+    
+    habits = queryset.order_by('-created_on')
+    
+    return render(request, 'habit_tracker/explore_habits.html', 
+                  {'habits': habits}
+            )
+    
 
 def user_habits(request, user):
     """

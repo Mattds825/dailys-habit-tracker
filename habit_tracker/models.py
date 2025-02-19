@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 
 VIS_STATUS = ((0, "Private"), (1, "Follower"), (2, "Public"))
 CHOSEN_COLOR = ((0, "Red"), (1, "Green"), (2, "Blue"), (3, "Yellow"), (4, "Purple"), (5, "Orange"), (6, "Pink"), (7, "Gray"))
+REACTION = ((0, "clap"), (1, "like"), (2, "heart"), (3, "trophy"))
 
 # Create your models here.
 
@@ -32,3 +33,16 @@ class CheckIn(models.Model):
     
     def __str__(self):
         return f"{self.habit} - {self.checked_in_on}"
+
+class Reaction(models.Model):
+    reaction_type = models.IntegerField(choices=REACTION)
+    to_habit = models.ForeignKey(Habit, on_delete=models.CASCADE, related_name="reactions")
+    from_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="reactions")
+    is_seen = models.BooleanField(default=False)
+    date_created = models.DateTimeField(auto_now_add=True)
+    
+    class Meta:
+        ordering = ["-date_created"]
+    
+    def __str__(self):
+        return f"{self.reaction_type} - {self.to_habit} - {self.from_user}"
