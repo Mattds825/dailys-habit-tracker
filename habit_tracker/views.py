@@ -50,6 +50,9 @@ def user_habits(request, user):
     # remove habits that are not associated with the user
     habits = [h for h in habits if h.user.username == user]
     
+    new_reactions = Reaction.objects.filter(to_habit__user=request.user, is_seen=False)
+    
+    print(new_reactions.count())
     
     if request.method == "POST":
         habit_form = HabitForm(data=request.POST)        
@@ -68,7 +71,8 @@ def user_habits(request, user):
                   {'habits': habits,
                    'h_user': user,
                     'habit_form': habit_form,
-                    'checkin_form': checkin_form,                    
+                    'checkin_form': checkin_form,
+                    'new_reactions': new_reactions                    
                    }
             )    
     
@@ -156,3 +160,18 @@ def user_reaction(request, habit_id, reaction_type):
     
     # return to explore page
     return HttpResponseRedirect(reverse("explore"))
+
+def dismiss_reaction(request, user, reaction_id):
+    """
+    dismiss a reaction
+    """
+    
+    # make sure correct user is dismissing the reaction
+    if request.user.username != user:
+        return HttpResponseRedirect(reverse("explore"))
+    
+    reaction = get_object_or_404(Reaction, id=reaction_id)
+    reaction.is_seen = True
+    reaction.save()
+    
+    return HttpResponseRedirect(reverse("user_habits", args=[user]))

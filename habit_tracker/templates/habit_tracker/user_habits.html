@@ -21,9 +21,20 @@
     <p>user: {{ h_user }}</p>
 
     {% if user.is_authenticated and user.username == h_user %}
-    <button type="button" class="btn btn-secondary">
-        Notifications <span class="bg-danger p-1 rounded-circle">x</span>
-    </button>
+    <button type="button" id="notificationButton" class="btn btn-secondary" data-toggle="collapse" data-target="#notificationCollapse" aria-expanded="false" aria-controls="notificationCollapse">
+        Notifications <span class="bg-danger p-1 rounded-circle">{{ new_reactions.count }}</span>
+    </button>    
+    <div class="collapse" id="notificationCollapse">
+        <div class="card card-body" id="notificationCollapseBody">
+          {% for reaction in new_reactions %}
+            <div class="notificationDiv d-flex justify-content-between my-2">
+                <p class="notificationText my-auto" data-reaction-type="{{ reaction.reaction_type }}"  data-from-user="{{ reaction.from_user }}"></p>
+                <button data-reaction-id="{{ reaction.id }}" data-user="{{ user.username }}" type="button" class="btn btn-outline-primary btn-sm dismissNotificationBtn">X</button>
+            </div>
+            <hr/>
+          {% endfor %}
+        </div>
+      </div>
     <form id="habitForm" method="post"
     style="display: none;">
         {{ habit_form | crispy }}
@@ -31,7 +42,7 @@
         <button id="habitFormSubmitBtn" type="submit"
         class="btn btn-primary btn-sm">Submit</button>
         <button id="habitFormCancelBtn"
-        class="btn btn-warning btn-sm" formnovalidate >Cancel</button>
+        class="btn btn-warning btn-sm" formnovalidate >Cancel</button>      
     </form>
     <div class="text-center mt-3">
         <a href="#" id="createHabitBtn" class="btn btn-primary btn-sm">Create new habit</a>
@@ -216,4 +227,6 @@ aria-labelledby="checkInModalLabel" aria-hidden="true">
     <script src="{% static 'js/calendarHeatmap.js' %}"></script>
     <script src="{% static 'js/reactionsElement.js' %}"></script>
     <script src="{% static 'js/userReaction.js' %}"></script>
+    <script src="{% static 'js/notificationCollapse.js' %}"></script>
+
 {% endblock %}
