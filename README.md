@@ -85,9 +85,18 @@ note: using default django user model
 
 ![reaction erd](documentation/erd/reaction-erd.png)
 
+**FollowerLookup Model ERD**
+
+![followerLookup erd](documentation/erd/follower-lookup-erd.png)
+
 **The Models below are only for the landing page and not connected to the Habit Tracking**
 
 ![landing page models erd](documentation/erd/landing-erd.png)
+
+
+#### Complete Entity Relationship Diagram
+
+![complete erd](documentation/erd/complete-erd.png)
 
 ### User Features
 

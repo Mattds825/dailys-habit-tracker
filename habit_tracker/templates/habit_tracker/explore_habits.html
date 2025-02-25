@@ -32,11 +32,33 @@
                         <div class="card-body">
                             <div class="image-container">
                                 <div class="image-flash">
-                                    <p class="author">User: <a href="{% url 'user_habits' habit.user %}">{{ habit.user }}</a></p>
+                                    <p class="author">User: 
+                                        <a href="{% url 'user_habits' habit.user %}">{{ habit.user }}</a>
+                                        {% if habit.user in following_users %}
+                                        <span class="badge bg-success">Following</span>
+                                        {% else %}
+                                        <span class="badge bg-danger">Not Following</span>
+                                        {% endif %}
+                                    </p>
                                 </div>
                             </div>
                             <h2 class="card-title">{{ habit.title }}</h2>
-                            <hr />                              
+                            <hr />
+                             <!-- Calendar -->
+                             <div id="calHeatmap-{{ habit.id }}" class="calHeatmap d-flex flex-wrap" data-checkins="{{ habit.check_ins.all }}">                            
+                                {% for checkin in habit.check_ins.all %}                                
+                                <p class="d-none"> {{ checkin.checked_in_on.date }} </p>
+                                {% endfor %}
+                            </div>
+                            <!-- /. Calendar -->                              
+                            <hr />
+                            <!-- Reaction Element -->
+                            <div id="reactionsEl-{{ habit.id }}" class="reactionsEl d-flex" data-reactions="{{ habit.reactions.all }}">                                
+                                {% for reaction in habit.reactions.all %}                            
+                                <p>{{ reaction.reaction_type }}</p>
+                                {% endfor %}
+                            </div>
+                            <!-- /. Reaction Element -->                                   
                             </p>
                         </div>
                     </div>

@@ -41,9 +41,13 @@ def explore_habits(request):
     if request.user.is_authenticated:
         queryset = queryset.exclude(user=request.user)
     else:
-        return HttpResponseRedirect(reverse("landing"))
+        return HttpResponseRedirect(reverse("landing"))    
 
     habits = queryset.order_by('-created_on')
+    
+    # get list of followed_users from FollowerLookup 
+    following_users = FollowerLookup.objects.filter(user=request.user)        
+    following_users = [f.followed_user for f in following_users]
 
     today = now().date()
     for h in habits:
@@ -57,8 +61,11 @@ def explore_habits(request):
         h.streak_number = streak
 
     return render(request, 'habit_tracker/explore_habits.html',
-                  {'habits': habits}
-                  )
+                    {
+                    'habits': habits, 
+                    'following_users': following_users
+                    }
+                )
 
 
 def user_habits(request, user):
@@ -88,6 +95,14 @@ def user_habits(request, user):
 
     # remove habits that are not associated with the user
     habits = [h for h in habits if h.user.username == user]
+    
+    # annotate user with new is_followed boolean
+    if user != request.user.username:
+        user = User.objects.get(username=user)
+        user.is_followed = False
+        for a in FollowerLookup.objects.filter(user=request.user):
+            if a.followed_user == user:
+                user.is_followed = True
 
     new_reactions = Reaction.objects.filter(
         to_habit__user=request.user, is_seen=False)

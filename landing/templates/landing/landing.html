@@ -1,28 +1,27 @@
+<!-- Landing Page Template -->
+
 {% extends 'base.html' %}
 {% block content %}
 {% load static %}
-<div class="container mt-5">
-  <div class="row">    
-    <div class="col-8">
-      <!-- Title goes between these h2 tags -->
-      <h1>{{ about.heading }}</h1>
-      <!-- Content goes directly underneath this -->
-      {{ about.subheading | safe }}
-    </div>
-  </div>
-  <div class="row">
-    <div class="col text-right">
-      <!-- Updated on field goes in here -->
 
-      <h2>Features: </h2>
-      
-      {% for feature in features %}
-        <h3>{{ feature.feature_title }}</h3>
-        {{ feature.feature_description | safe}}
-      {% endfor%}
-
-      <p class="text-end"><em>Updated on: {{ about.updated_on }}</em></p>
-    </div>
+<div class="container mt-5 d-flex flex-column justify-content-center align-items-center">
+  <div class="hero">
+      <h1 class="font-weight-bold">{{ about.heading }}</h1>
+      <p class="lead"> {{ about.subheading | safe }}</p>      
   </div>
+  
+  <div class="features row text-center mt-5">
+    {% for feature in features %}
+      <div class="col-md-4 feature-box bg-light p-4">
+        <h4>{{ feature.feature_title }}</h4>
+        <p>{{ feature.feature_description | safe}}</p>
+      </div>        
+    {% endfor%}
+    
+    
+  </div>
+
+  <p class="text-end"><em>Updated on: {{ about.updated_on }}</em></p>
+
 </div>
 {% endblock content %}

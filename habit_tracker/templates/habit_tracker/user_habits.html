@@ -22,7 +22,7 @@
 
     {% if user.is_authenticated and user.username == h_user %}
     <button type="button" id="notificationButton" class="btn btn-secondary" data-toggle="collapse" data-target="#notificationCollapse" aria-expanded="false" aria-controls="notificationCollapse">
-        Notifications <span class="bg-danger p-1 rounded-circle">{{ new_reactions.count }}</span>
+        Notifications <span class="bg-danger px-2 py-1 rounded-circle">{{ new_reactions.count }}</span>
     </button>    
     <div class="collapse" id="notificationCollapse">
         <div class="card card-body" id="notificationCollapseBody">
@@ -47,6 +47,13 @@
     <div class="text-center mt-3">
         <a href="#" id="createHabitBtn" class="btn btn-primary btn-sm">Create new habit</a>
     </div>
+
+    {% elif user.is_authenticated and not user.username == h_user%}
+        {% if h_user.is_followed %}
+        <button data-current-user="{{ user.username }}" data-followed-user="{{ h_user.username }}" class="btn btn-sm btn-outline-danger unfollowBtn">Unfollow</button>
+        {% else %}
+        <button data-current-user="{{ user.username }}" data-followed-user="{{ h_user.username }}" class="btn btn-sm btn-outline-success followBtn">Follow</button>
+        {% endif %}
     {% endif %}
 
     <div class="row">        
@@ -83,17 +90,21 @@
                                 </span>
                             </h2>
                             <hr />
+                            <!-- Calendar -->
                             <div id="calHeatmap-{{ habit.id }}" class="calHeatmap d-flex flex-wrap" data-checkins="{{ habit.check_ins.all }}">                            
                                 {% for checkin in habit.check_ins.all %}                                
                                 <p class="d-none"> {{ checkin.checked_in_on.date }} </p>
                                 {% endfor %}
-                            </div>                              
+                            </div>
+                            <!-- /. Calendar -->                              
                             <hr />
+                            <!-- Reaction Element -->
                             <div id="reactionsEl-{{ habit.id }}" class="reactionsEl d-flex" data-reactions="{{ habit.reactions.all }}">                                
                                 {% for reaction in habit.reactions.all %}                            
                                 <p>{{ reaction.reaction_type }}</p>
                                 {% endfor %}
-                            </div>                            
+                            </div>
+                            <!-- /. Reaction Element -->                            
                         </div>
                     </div>
                 </div>
@@ -228,4 +239,5 @@ aria-labelledby="checkInModalLabel" aria-hidden="true">
     <script src="{% static 'js/reactionsElement.js' %}"></script>
     <script src="{% static 'js/userReaction.js' %}"></script>
     <script src="{% static 'js/notificationCollapse.js' %}"></script>
+    <script src="{% static 'js/handleFollow.js' %}"></script>
 {% endblock %}
