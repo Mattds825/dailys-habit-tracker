@@ -17,13 +17,17 @@
   {% if not users %}
     <p>No users found</p>
   {% else %}
-    {% for user in users %}
+    {% for search_user in users %}
       <div class="card p-3">
         <div class="col d-flex justify-content-between">
-          <h3>{{ user.username }}</h3>
-          <button class="btn btn-sm btn-outline-success">Follow</button>
+          <h3>{{ search_user.username }} <small class="text-muted">{% if search_user.is_followed %}| following{%endif%}</small></h3>
+          {% if search_user.is_followed %}
+          <button data-current-user="{{ user.username }}" data-followed-user="{{ search_user.username }}" class="btn btn-sm btn-outline-danger unfollowBtn">Unfollow</button>
+          {% else %}
+          <button data-current-user="{{ user.username }}" data-followed-user="{{ search_user.username }}" class="btn btn-sm btn-outline-success followBtn">Follow</button>
+          {% endif %}
         </div>
-        <p>Joined on: {{ user.date_joined }} </p>
+        <p>Joined on: {{ search_user.date_joined }} </p>
       </div>
     {% endfor %}
   {% endif %}
@@ -33,4 +37,5 @@
 
 {% block scripts %}
   <script src="{% static 'js/searchUserInput.js' %}"></script>
+  <script src="{% static 'js/handleFollow.js' %}"></script>
 {% endblock %}

@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.db.models import Count, Q
 from django.utils.timezone import now
-from .models import Habit, CheckIn, Reaction, User
+from .models import Habit, CheckIn, Reaction, User, FollowerLookup
 from .forms import HabitForm, CheckInForm
 
 # Create your views here.
@@ -202,14 +202,63 @@ def search_users(request, user):
     
     users = User.objects.filter(username__icontains=user)
     
+    current_user = ""
+    
     # exclude the logged in user
     if request.user.is_authenticated:
         users = users.exclude(username=request.user.username)
+        current_user = request.user
+
     
-    print(users)
+    already_following = FollowerLookup.objects.filter(user=current_user)
     
+    print(already_following)   
+
+    # annotate users boolean is_followed if the user is in the already_followed.user_followed list    
+    for u in users:
+        u.is_followed = False
+        for a in already_following:
+            if a.followed_user == u:
+                u.is_followed = True
+    
+    for u in users:
+        print(u.is_followed)
     
     return render(request, 'habit_tracker/search_users.html', 
                   {'users': users}
             )
     
+
+def follow_user(request, user):
+    """
+    follow a user
+    """
+    
+    followed_user = get_object_or_404(User, username=user)
+    
+    if request.user.is_authenticated:
+        new_follow = FollowerLookup.objects.create(
+            user=request.user,
+            followed_user=followed_user
+        )
+        new_follow.save()
+        messages.add_message(request, messages.SUCCESS, f"started following {user}")
+    
+    return HttpResponseRedirect(reverse("search_users", args=[user]))
+
+def unfollow_user(request, user):
+    """
+    unfollow a user
+    """
+    
+    followed_user = get_object_or_404(User, username=user)
+    
+    if request.user.is_authenticated:
+        follow = FollowerLookup.objects.get(
+            user=request.user,
+            followed_user=followed_user
+        )
+        follow.delete()
+        messages.add_message(request, messages.SUCCESS, f"stopped following {user}")
+    
+    return HttpResponseRedirect(reverse("search_users", args=[user]))

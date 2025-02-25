@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Habit, CheckIn, Reaction
+from .models import Habit, CheckIn, Reaction, FollowerLookup
 from django_summernote.admin import SummernoteModelAdmin
 
 # Register your models here.
@@ -20,3 +20,9 @@ class ReactionAdmin(admin.ModelAdmin):
     list_display = ('reaction_type', 'to_habit', 'from_user', 'is_seen', 'date_created')
     search_fields = ('reaction_type', 'to_habit', 'from_user')
     list_filter = ('reaction_type', 'to_habit', 'from_user', 'is_seen', 'date_created')
+
+@admin.register(FollowerLookup)
+class FollowerLookupAdmin(admin.ModelAdmin):
+    list_display = ('user', 'followed_user')
+    search_fields = ('user', 'followed_user')
+    list_filter = ('user', 'followed_user')
