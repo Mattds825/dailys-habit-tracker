@@ -14,16 +14,33 @@ class BrowseHabits(generic.ListView):
     template_name = "habit_tracker/explore_habits.html"
     paginate_by = 5
     
+def check_redirect(request):
+    """
+    check if user is authenticated
+    redirect to explore if authenticated
+    else redirect to landing page
+    """
+    if request.user.is_authenticated:
+        return HttpResponseRedirect(reverse("explore"))
+    else:
+        return HttpResponseRedirect(reverse("landing"))
+    
 def explore_habits(request):
     """
     display all public habits
     that are not associated with the logged in user
+    if user is not logged in return to landing page
     """
     queryset = Habit.objects.all().filter(visibility=2)
     
+    
+    
     # only show public habits that are not associated with the logged in user
+    # if not logged in return to landing page
     if request.user.is_authenticated:
         queryset = queryset.exclude(user=request.user)
+    else:
+        return HttpResponseRedirect(reverse("landing"))
     
     habits = queryset.order_by('-created_on')
     
@@ -37,8 +54,6 @@ def user_habits(request, user):
     display posts associated with a user
     show add post button if user is logged in
     """
-    
-    # print(request.user)
     
     queryset = Habit.objects.all()
     today = now().date()   
@@ -54,13 +69,16 @@ def user_habits(request, user):
     
     print(new_reactions.count())
     
-    if request.method == "POST":
-        habit_form = HabitForm(data=request.POST)        
-        if habit_form.is_valid():
-            new_habit = habit_form.save(commit=False)
-            new_habit.user = request.user
-            new_habit.save()
-            messages.add_message(request, messages.SUCCESS, "Habit added successfully")
+    #  check if user is logged in and if user is the same as the user in the url
+    #  add habit form
+    if request.user == User.objects.get(username=user):
+        if request.method == "POST":
+            habit_form = HabitForm(data=request.POST)        
+            if habit_form.is_valid():
+                new_habit = habit_form.save(commit=False)
+                new_habit.user = request.user
+                new_habit.save()
+                messages.add_message(request, messages.SUCCESS, "Habit added successfully")
     
     habit_form = HabitForm()
     checkin_form = CheckInForm()
