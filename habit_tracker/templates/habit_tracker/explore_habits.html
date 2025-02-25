@@ -27,7 +27,7 @@
             <div class="row">
                 {% for habit in habits %}
                 <!-- Habit & calendar -->
-                <div class="col-8">
+                <div class="col-md-8">
                     <div class="card mb-4">
                         <div class="card-body">
                             <div class="image-container">
@@ -43,15 +43,15 @@
                 </div>
                 <!-- /. Habit & calendar -->
                  <!-- Data and reaction -->
-                <div class="col-4 text-center my-auto">
+                <div class="col-md-4 text-center my-auto">
                     <div class="row">
                         <div class="col">
-                            <p>Last Checked in:</p>
-                            <p>date</p>
+                            <p>Last Check-in:</p>
+                            <p>{{ habit.check_ins.first.checked_in_on|default:"none" }}</p>
                         </div>
                         <div class="col">
                             <p>Current Streak:</p>
-                            <p>num</p>
+                            <p>{{ habit.streak_number }}</p>
                         </div>
                         <div class="col">
                             <p>React:</p>

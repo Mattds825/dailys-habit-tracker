@@ -19,11 +19,11 @@ document.addEventListener("DOMContentLoaded", function () {
       let formattedDate = dateObj.toISOString().split("T")[0];
       checkins.push(formattedDate);
 
-      const heatmapId = heatmap.id;
-
-      generateCalendar("year", heatmap, checkins, heatmapId);
+      
     }
-    console.log(checkins);
+    const heatmapId = heatmap.id;
+    generateCalendar("year", heatmap, checkins, heatmapId);
+    console.log("checkins init :",checkins);
   }
 });
 
