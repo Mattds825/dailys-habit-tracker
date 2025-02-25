@@ -9,4 +9,5 @@ urlpatterns = [
     path('<str:user>/check_in/<int:habit_id>/', views.check_in, name='check_in'),
     path('user_reaction/<int:habit_id>/<int:reaction_type>', views.user_reaction, name='user_reaction'),
     path('<str:user>/dismiss_reaction/<int:reaction_id>', views.dismiss_reaction, name='dismiss_reaction'),
+    path('search_users/<str:user>', views.search_users, name='search_users'),
 ]

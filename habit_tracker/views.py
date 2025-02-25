@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.db.models import Count, Q
 from django.utils.timezone import now
-from .models import Habit, CheckIn, Reaction
+from .models import Habit, CheckIn, Reaction, User
 from .forms import HabitForm, CheckInForm
 
 # Create your views here.
@@ -175,3 +175,23 @@ def dismiss_reaction(request, user, reaction_id):
     reaction.save()
     
     return HttpResponseRedirect(reverse("user_habits", args=[user]))
+
+def search_users(request, user):
+    """
+    return a list of matching usernames to the user parameter
+    should exclude the logged in user
+    """
+    
+    users = User.objects.filter(username__icontains=user)
+    
+    # exclude the logged in user
+    if request.user.is_authenticated:
+        users = users.exclude(username=request.user.username)
+    
+    print(users)
+    
+    
+    return render(request, 'habit_tracker/search_users.html', 
+                  {'users': users}
+            )
+    

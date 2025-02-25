@@ -11,10 +11,15 @@
 
 {% block content %}
 
-<!-- index.html content starts here -->
+<!-- explore_habits.html content starts here -->
 <div class="container-fluid h-100">
-    <div class="text-center mt-3">
-        <a href="#" class="btn btn-primary btn-sm">Search for other users</a>
+    <div class="col-md-6 mx-auto my-3">
+        <div class="input-group">
+            <input id="searchUserInput" type="text" class="form-control" placeholder="username" aria-label="username" aria-describedby="basic-addon2">
+            <div class="input-group-append">
+              <button id="searchUserBtn" class="btn btn-outline-primary" type="button">Search Users</button>
+            </div>
+        </div>    
     </div>
     <div class="row">        
         <!-- List of Habits -->
@@ -133,4 +138,5 @@ aria-labelledby="reactModalLabel" aria-hidden="true">
     <script src="{% static 'js/calendarHeatmap.js' %}"></script>
     <script src="{% static 'js/reactionsElement.js' %}"></script>
     <script src="{% static 'js/userReaction.js' %}"></script>
+    <script src="{% static 'js/searchUserInput.js' %}"></script>
 {% endblock %}
