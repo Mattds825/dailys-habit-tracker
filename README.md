@@ -53,24 +53,53 @@ view list with acceptance criteria in [TESTING.md](TESTING.md)
 
 ----
 
-## Features 
+## Features
 
-### Django Structure
+### Main App Features
+
+These are the features necessary for the minimum viable product and base on the user requirements and acceptance criteria found in [TESTING.md](TESTING.md)
+
+### Django App Structure
+
+The application is built on a root project that includes the the requirements file and the Procfile, which are used to build the project in Heruko. 
+There is the main **dailys** Django project which includes the project settings file and the main urls file.
+
+There are also two main django Apps, the **landing app** which includes the models, views and templates for the the landing page and the **habit_tracker** app which includes the 
+views, template and models for the main habit tracking side of the web app. These are separate because there are not connected logically in the designed database. 
+
+Further, there is a **templates directory** in the project root that include the base template which is inherited by the other templates. Also there is the **static/staticfiles** directory which 
+include the css files and the javascript files used in the project.
+
+Finally the **manage.py** file in the root is used to run the application locally and control to the django app 
 
 - root
+    - manage.py
+    - requirements
+    - Procfile
     - dailys project
+        - settings.py
+        - urls.py
     - habit-tracker app
-        - templates
+        - views.py
+        - models.py
+        - /templates/
     - landing
-        - templates
+        - views.py
+        - models.py
+        - /templates/
     - templates
+        - base.html
+    - staticfiles
     
 
 ### Database design
 
+The database used a PostgreSQL instance in a server provided by Code Institute. Django is used to connect to that database and create the models
+
 **User Model ERD**
 
 note: using default django user model 
+
 ![user erd](documentation/erd/user-erd.png)
 
 **Habit Model ERD**
@@ -110,7 +139,54 @@ Using Default Bootstrap colors for consistency and time efficiency
 
 ### Structure / Navigation
 
+When a user users the site URL in the web browser, there is a check_redirect view that is opened by django
+this view checks if a user is already logged in and redirects the user to one of the following:
+
+- **/explore** if there are logged in 
+- **/landing** if there are not
+
+If a user in not logged in, from the landing page they can use the navigation bar items to access, 
+
+- **/accounts/login/** - login page 
+- **/accounts/signup/** - register page
+- **/landing/** - landing page
+
+![nav landing not logged in](/documentation/navigation/nav-landing-not-logged-in.png)
+
+When a user does log in they are redirected to their personal habits page, **/\<username>/**
+They can now use the navigation bar to access the following pages 
+
+- **/\<username>/** - Personal Habits page
+- **/explore/** - Explore other users' habits
+- **/landing/** - landing page
+- **/accounts/logout/** - logout page
+
+![nav person page](/documentation/navigation/nav-personal.png)
+
+now if the user returns to the landing page they will see that the navigation bar has the items for logged in users 
+
+![nav landing logged in](/documentation/navigation/nav-landing-logged-in.png)
+
+
+From the **/explore** page a user can also access
+
+- **/\<username>/** - Another User's Habits page. through the username hyperlink on the user habit
+- **/search_users/\<term>/>** - The Search Result Page, through using the search bar
+
+The explore, user habit pages and search pages are only accessible to a logged in user, if the user enter the url in the browser and are not logged in 
+they will be redirected back to the landing page
+
 ### Accessibility
+
+#### User Feedback For Buttons and Navigation
+
+**Navbar Hover and Selected Item**
+
+**Button Hover**
+
+### Defensive Design
+
+**Confirmation Dialogues when performing database operations**
 
 ## Deployment
 
@@ -119,6 +195,8 @@ Deployment done through Heruko
 ## Testing
 
 see full testing in [Testing.md](TESTING.md)
+
+## Future Consideration
 
 ## Credits
 
