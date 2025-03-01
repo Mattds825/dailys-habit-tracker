@@ -59,6 +59,75 @@ view list with acceptance criteria in [TESTING.md](TESTING.md)
 
 These are the features necessary for the minimum viable product and base on the user requirements and acceptance criteria found in [TESTING.md](TESTING.md)
 
+#### Landing Page
+
+User should be sent to landing page if not logged in.
+
+Landing Page should have a clean UI/UX with main information about app. This information should be stored in the database and editable from the 
+admin portal. User should be able to Navigate to log in or register pages from landing page.
+
+#### User Authentication
+
+User should be able to sign up with an email, username and password. 
+Password should meet requirements and username must be unique.
+
+User should be able to log in and log out.
+
+Once logged in user should be redirected to explore page
+
+These pages should have a clean and coherent UI/UX 
+
+#### Explore Habits Page
+
+User should be able to see all the habits from users they follow and from users that set the habit to "public" visibility 
+
+Logged in user can navigate to, a habit user's profile by clicking their username 
+
+Logged in user can react to habits on the list
+
+Should have a clean an easy to use UI/UX
+
+#### Personal Habits Page
+
+User can see a list of all their habits along with the check in calendar and data about their check ins and reactions to that Habit.
+
+User can create and edit habits from here. 
+
+#### Habits CRUD Operations
+
+User can create Habits with title, description, color and visibility.
+
+They can edit each of these fields and they can delete them.
+
+The Data is shown in the habit card in both the personal habits and explore habits page
+
+#### Habit Check-Ins
+
+User can check in to a habit and leave a note. they can do this aas much aas they want each day. this data will be show in the calendar 
+
+#### Habit Calendar Heatmap
+
+Each user habit in the personal habits page and the explore page contain a calendar heatmap that visualizes the check-in data for that habit
+
+This calendar can be set to year, month and week viewing modes.
+
+#### Reaction to Habits and their Notifications
+
+User can choose from a range of reaction to a habit. Once reacted, the other user will see this as a notification they can dismiss
+(note: not realtime notification)
+
+#### Search Users
+
+User should be able to enter a search term and get a list of users whose username match that term.
+
+User can follow the users returned in the list.
+
+#### Follow/Unfollow Users
+
+User can follow and unfollow other users. This can be done in the search page or in the other user's profile page
+
+User can see a badge on the explore page that shows if users are followed or not
+
 ### Django App Structure
 
 The application is built on a root project that includes the the requirements file and the Procfile, which are used to build the project in Heruko. 
@@ -137,6 +206,24 @@ Using Default Bootstrap colors for consistency and time efficiency
 
 ### Mockups
 
+**Paper Mockups**
+
+The first thing I did design-wise was to create a hand drawn mockup to get the initial set of features into a coherent visual form
+
+![hand drawn mockup](/documentation/mockups/paper-mockup.jpg)
+
+**Basic UI Mockup**
+
+Using the drawn design I created a basic mockup using Sketch to have a more flexibility in editing the design 
+
+![basic mockup](/documentation/mockups/basic-sketch-mockup.png)
+
+**Final UI Mockup**
+
+I Finally created a more complex mockup on Sketch to show more elements and features that I had thought of.
+This was still note representative of the complete final product as some features where added and the design on the site 
+conforms more the the bootstrap standard as those are the styling classes used
+
 ### Structure / Navigation
 
 When a user users the site URL in the web browser, there is a check_redirect view that is opened by django
@@ -210,6 +297,7 @@ see full testing in [Testing.md](TESTING.md)
 - Git/Github - Version Control
 - django SummerNote - styling django admin panel
 - django crispy forms - for handling and creating forms
+- Sketch App - Used to create Mockups
 
 ### Resources 
 
