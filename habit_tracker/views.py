@@ -60,6 +60,10 @@ def explore_habits(request):
             else:
                 break
         h.streak_number = streak
+        
+    # annotate each habit with a list of check_in check_in_on dates in the format yyyy-mm-dd
+    for h in habits:
+        h.check_in_dates = [c.checked_in_on.strftime('%Y-%m-%d') for c in h.check_ins.all()]
 
     return render(request, 'habit_tracker/explore_habits.html',
                     {

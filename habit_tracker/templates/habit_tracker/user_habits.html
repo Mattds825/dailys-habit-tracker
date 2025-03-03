@@ -64,31 +64,30 @@
                 <!-- Habit & calendar -->
                 <div class="col-md-8">
                     <div class="card mb-4">
-                        <div class="card-body">
-                            <div class="image-container">
-                                <div class="image-flash d-flex justify-content-between">
-                                    <p class="author">User: {{ habit.user }}</p>
-                                    <div class="d-flex">
-                                        <p class="my-auto mx-3">
-                                            total : {{ habit.check_ins.count }}
-                                            | today :  {{ habit.check_ins_today }}
-                                        </p>
-                                        {% if user.is_authenticated and user.username == h_user %}
-                                        <button data-habit-id="{{ habit.id }}" type="button" class="btn btn-outline-success btn-sm btn-checkin">Check In</button>
-                                        {% endif %}
-                                    </div>                                   
+                        <div class="card-body">                            
+                            <div class="d-flex justify-content-between">
+                                <h2 class="card-title">
+                                    {{ habit.title }} 
+                                    <span>
+                                        <button type="button" class="btn btn-outline-secondary btn-sm ms-3"
+                                        data-bs-toggle="tooltip"  data-bs-html="true" data-bs-placement="right" 
+                                        title="{{ habit.description | safe }}">
+                                            <i class="fas fa-info-circle"></i>
+                                        </button>
+                                    </span>
+                                </h2>
+                                <!-- check in btn and data -->
+                                <div class="d-flex">
+                                    <p class="my-auto mx-3">
+                                        total : {{ habit.check_ins.count }}
+                                        | today :  {{ habit.check_ins_today }}
+                                    </p>
+                                    {% if user.is_authenticated and user.username == h_user %}
+                                    <button data-habit-id="{{ habit.id }}" type="button" class="btn btn-outline-success btn-sm btn-checkin">Check In</button>
+                                    {% endif %}
                                 </div>
+                                <!-- /. check in btn and data -->      
                             </div>
-                            <h2 class="card-title">
-                                {{ habit.title }} 
-                                <span>
-                                    <button type="button" class="btn btn-outline-secondary btn-sm ms-3"
-                                    data-bs-toggle="tooltip"  data-bs-html="true" data-bs-placement="right" 
-                                    title="{{ habit.description | safe }}">
-                                        <i class="fas fa-info-circle"></i>
-                                    </button>
-                                </span>
-                            </h2>
                             <hr />
                             <!-- Calendar -->
                             <div id="calHeatmap-{{ habit.id }}" class="calHeatmap d-flex flex-wrap" data-checkins="{{ habit.check_in_dates }}">                                                                                           

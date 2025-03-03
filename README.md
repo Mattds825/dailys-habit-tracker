@@ -87,15 +87,36 @@ Logged in user can react to habits on the list
 
 Should have a clean an easy to use UI/UX
 
-#### Personal Habits Page
+#### Personal/User Habits Page
 
 User can see a list of all their habits along with the check in calendar and data about their check ins and reactions to that Habit.
 
-User can create and edit habits from here. 
+When user is on their own habits page, the habits element include the check in button, and button to edit and delete habit
+User can create from this page. 
+
+| Desktop View | Mobile View |
+|--------------|-------------|
+| ![personal habit element desktop](documentation/features/habit-element-personal.png) | ![personal habit element desktop](documentation/features/habit-element-personal-mobile.png) |
+
+When user is on another user's habit page, the habit is show with the reaction select element
+
+| Desktop View | Mobile View |
+|--------------|-------------|
+| ![personal habit element desktop](documentation/features/habit-element-personal.png) | ![personal habit element desktop](documentation/features/habit-element-personal-mobile.png) |
+
 
 #### Habits CRUD Operations
 
 User can create Habits with title, description, color and visibility.
+They do this by clicking the 'Create new Habit' Button, which opens a form to create the habit where the button was
+
+This forms are made with **django crispy forms**
+
+![create habit btn](/documentation/features/new-habit-btn.png)
+
+| Desktop View | Mobile View |
+|--------------|-------------|
+| ![create habit form](documentation/features/new-habit-form.png) | ![create habit form mobile](documentation/features/new-habit-form-mobile.png) |
 
 They can edit each of these fields and they can delete them.
 
@@ -127,6 +148,13 @@ User can follow the users returned in the list.
 User can follow and unfollow other users. This can be done in the search page or in the other user's profile page
 
 User can see a badge on the explore page that shows if users are followed or not
+
+#### Admin Page
+
+The superuser should be able to access the admin page, from there they can manage all the habits and check ins data.
+They can also add or remove users
+
+They should also have access to change the data displayed in the landing page
 
 ### Django App Structure
 
@@ -230,11 +258,27 @@ In this section are screenshots for each page on a desktop and mobile.
 
 #### Login Page
 
+| Desktop View | Mobile View |
+|--------------|-------------|
+| ![login page desktop](documentation/pages/sign-in-page.png) | ![login page mobile](documentation/pages/sign-in-page-mobile.png) |
+
 #### Register Page
+
+| Desktop View | Mobile View |
+|--------------|-------------|
+| ![register page desktop](documentation/pages/sign-up-page.png) | ![register page mobile](documentation/pages/sign-up-page-mobile.png) |
 
 #### Logout Page
 
+| Desktop View | Mobile View |
+|--------------|-------------|
+| ![logout page desktop](documentation/pages/logout-page.png) | ![logout page mobile](documentation/pages/logout-page-mobile.png) |
+
 #### Landing Page
+
+| Desktop View | Mobile View |
+|--------------|-------------|
+| ![landing page desktop](documentation/pages/landing-page.png) | ![landing page mobile](documentation/pages/landing-page-mobile.png) |
 
 #### Explore Page
 
