@@ -1,3 +1,4 @@
+from datetime import timedelta
 from django.shortcuts import render, get_list_or_404, reverse, get_object_or_404
 from django.views import generic
 from django.contrib import messages
@@ -84,17 +85,27 @@ def user_habits(request, user):
 
     # annotate habits with streak_number to show the current streak of consecutive check-ins
     for h in habits:
+        print(h.id, h.title)
         h.streak_number = 0
         streak = 0
+        check_day = today
         for c in h.check_ins.order_by('-checked_in_on'):
-            if c.checked_in_on.date() == today:
+            # skip if multiple check-ins on the same day
+            if c.checked_in_on.date() == check_day + timedelta(days=1):
+                pass                 
+            elif c.checked_in_on.date() == check_day:
                 streak += 1
+                check_day = check_day - timedelta(days=1)            
             else:
                 break
         h.streak_number = streak
 
     # remove habits that are not associated with the user
     habits = [h for h in habits if h.user.username == user]
+    
+    # annotate each habit with a list of check_in check_in_on dates in the format yyyy-mm-dd
+    for h in habits:
+        h.check_in_dates = [c.checked_in_on.strftime('%Y-%m-%d') for c in h.check_ins.all()]
     
     # annotate user with new is_followed boolean
     if user != request.user.username:
@@ -107,7 +118,7 @@ def user_habits(request, user):
     new_reactions = Reaction.objects.filter(
         to_habit__user=request.user, is_seen=False)
 
-    print(new_reactions.count())
+    # print(new_reactions.count())
 
     #  check if user is logged in and if user is the same as the user in the url
     #  add habit form

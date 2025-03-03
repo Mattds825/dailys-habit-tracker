@@ -11,34 +11,30 @@ const heatmaps = document.getElementsByClassName("calHeatmap");
 
 document.addEventListener("DOMContentLoaded", function () {
   for (let heatmap of heatmaps) {
-    let checkins = [];
-    let paragraphs = heatmap.getElementsByTagName("p");
-    for (let p of paragraphs) {
-      let dateStr = p.textContent;
-      let dateObj = new Date(dateStr);
-      let formattedDate = dateObj.toISOString().split("T")[0];
-      checkins.push(formattedDate);
-
-      
-    }
-    const heatmapId = heatmap.id;
-    generateCalendar("year", heatmap, checkins, heatmapId);
-    console.log("checkins init :",checkins);
+    // set the default view to month for each heatmap
+    setView("month", heatmap.id);
   }
 });
 
-let currentView = "year";
-
+/**
+ * Sets the view for the calendar heatmap.
+ *
+ * @param {string} view - The view mode for the calendar (e.g., "monthly", "weekly").
+ * @param {string} heatmapId - The ID of the heatmap element.
+ */
 function setView(view, heatmapId) {
   console.log("setting view", view, heatmapId);
-  
+
   const heatmap = document.getElementById(heatmapId);
 
+  // get the raw data from the heatmap element
   const rawData = document
     .getElementById(heatmapId)
     .dataset.checkins.split(",");
-  const datePattern = /\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\.\d+/;
 
+  const datePattern = /\d{4}-\d{2}-\d{2}/;
+
+  // extract the checkin dates from the raw data
   const checkins = rawData
     .map((entry) => {
       const match = entry.match(datePattern);
@@ -46,11 +42,18 @@ function setView(view, heatmapId) {
     })
     .filter((date) => date !== null);
 
-    console.log("checkins", checkins);
-
+  // generate the calendar heatmap based on the view
   generateCalendar(view, heatmap, checkins, heatmapId);
 }
 
+
+/**
+ * Returns the contribution level for a given date.
+ *
+ * @param {string} date - The date to check.
+ * @param {Array} contributions - The list of contributions.
+ * @returns {number} - The contribution level for the date.
+ * */
 function getContributionLevel(date, contributions) {
   let count = contributions.filter((d) => d === date).length;
   if (count >= 4) return 4;
@@ -60,12 +63,29 @@ function getContributionLevel(date, contributions) {
   return 0;
 }
 
+
+/**
+ * Generates a calendar heatmap view based on the specified view type.
+ *
+ * @param {string} view - The view type for the calendar. Can be "year", "month", or "week".
+ * @param {HTMLElement} calendarEl - The HTML element where the calendar will be rendered.
+ * @param {Object} contributions - An object containing the contribution data.
+ * @param {string} heatmapId - The ID of the heatmap.
+ */
 function generateCalendar(view, calendarEl, contributions, heatmapId) {
   calendarEl.innerHTML = `
     <div class="cal-controls col-12">
-        <button class="btn btn-secondary btn-sm control-btn" onclick="setView('year', '${heatmapId}')" >Year</button>
-        <button class="btn btn-secondary btn-sm control-btn" onclick="setView('month', '${heatmapId}')" >Month</button>
-        <button class="btn btn-secondary btn-sm control-btn" onclick="setView('week', '${heatmapId}')" >Week</button>
+        <div class="btn-group" role="group" aria-label="View Controls">
+          <button class="btn btn-secondary btn-sm control-btn ${
+            view == "year" ? "disabled" : ""
+          }" onclick="setView('year', '${heatmapId}')" >Year</button>
+          <button class="btn btn-secondary btn-sm control-btn" ${
+            view == "month" ? "disabled" : ""
+          } onclick="setView('month', '${heatmapId}')" >Month</button>
+          <button class="btn btn-secondary btn-sm control-btn" ${
+            view == "week" ? "disabled" : ""
+          } onclick="setView('week', '${heatmapId}')" >Week</button>
+        </div>
     </div>
   `;
 
@@ -101,6 +121,7 @@ function generateCalendar(view, calendarEl, contributions, heatmapId) {
 
   let startMonth = 0,
     endMonth = 12;
+
   if (view === "month") {
     startMonth = new Date().getMonth();
     endMonth = startMonth + 1;
@@ -108,22 +129,28 @@ function generateCalendar(view, calendarEl, contributions, heatmapId) {
     const today = new Date();
     const startOfWeek = new Date(today);
     startOfWeek.setDate(today.getDate() - ((today.getDay() + 6) % 7));
-    
+
     const weekEl = document.createElement("div");
     weekEl.classList.add("days");
-    
+
     for (let i = 0; i < 7; i++) {
-        const date = new Date(startOfWeek);
-        date.setDate(startOfWeek.getDate() + i);
-        const formattedDate = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
-        
-        const dayEl = document.createElement("div");
-        dayEl.classList.add("day");
-        let level = getContributionLevel(formattedDate, contributions);
-        if (level > 0) dayEl.classList.add(`level-${level}`);
-        weekEl.appendChild(dayEl);
+      const date = new Date(startOfWeek);
+      date.setDate(startOfWeek.getDate() + i);
+      const formattedDate = `${date.getFullYear()}-${String(
+        date.getMonth() + 1
+      ).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
+
+      const dayEl = document.createElement("div");
+      dayEl.classList.add("day");
+      let level = getContributionLevel(formattedDate, contributions);
+      if (level > 0) dayEl.classList.add(`level-${level}`);
+      dayEl.setAttribute("data-toggle", "tooltip");
+      dayEl.setAttribute("data-placement", "top");
+      dayEl.setAttribute("title", `${level} contributions on ${date.toDateString()}`);
+      $(dayEl).tooltip();
+      weekEl.appendChild(dayEl);
     }
-    
+
     calendarEl.appendChild(weekEl);
     return;
   }
@@ -148,6 +175,10 @@ function generateCalendar(view, calendarEl, contributions, heatmapId) {
       dayEl.classList.add("day");
       let level = getContributionLevel(date, contributions);
       if (level > 0) dayEl.classList.add(`level-${level}`);
+      dayEl.setAttribute("data-toggle", "tooltip");
+      dayEl.setAttribute("data-placement", "top");
+      dayEl.setAttribute("title", `${level} contributions on ${date}`);
+      $(dayEl).tooltip();
       daysEl.appendChild(dayEl);
     }
 
@@ -155,7 +186,3 @@ function generateCalendar(view, calendarEl, contributions, heatmapId) {
     calendarEl.appendChild(monthEl);
   }
 }
-
-// generateCalendar(currentView);
-
-console.log("calender heatmap script");

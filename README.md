@@ -224,6 +224,24 @@ I Finally created a more complex mockup on Sketch to show more elements and feat
 This was still note representative of the complete final product as some features where added and the design on the site 
 conforms more the the bootstrap standard as those are the styling classes used
 
+### Pages
+
+In this section are screenshots for each page on a desktop and mobile.
+
+#### Login Page
+
+#### Register Page
+
+#### Logout Page
+
+#### Landing Page
+
+#### Explore Page
+
+#### Personal Habits Page / User Habit Page
+
+#### Search Page
+
 ### Structure / Navigation
 
 When a user users the site URL in the web browser, there is a check_redirect view that is opened by django
@@ -284,6 +302,13 @@ Deployment done through Heruko
 see full testing in [Testing.md](TESTING.md)
 
 ## Future Consideration
+
+These are some features that at some point were considered for this project but due to time constraints where not able to be added
+
+**More Efficient Heatmap Calendar**
+
+Although I am happy with the current implement of the heatmap calendar, ideally I would have tried to make it have a more efferent generation function 
+and that the year view would end in the current month instead of going from January to February
 
 ## Credits
 
