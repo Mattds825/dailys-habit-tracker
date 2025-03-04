@@ -1,3 +1,40 @@
+/* CHOSEN_COLOR = ((0, "Red"), (1, "Green"), (2, "Blue"), (3, "Yellow"), (4, "Purple"), (5, "Orange"), (6, "Pink"), (7, "Gray")) */
+
+:root{
+  --day-red-1: #ffd1dc;
+  --day-red-2: #ff6b85;
+  --day-red-3: #e83e8c;
+  --day-red-4: #a61e4d;
+  --day-green-1: #c6e48b;
+  --day-green-2: #7bc96f;
+  --day-green-3: #239a3b;
+  --day-green-4: #196127;  
+  --day-blue-1: #c7e9ff;
+  --day-blue-2: #64d5ff;
+  --day-blue-3: #0079bf;
+  --day-blue-4: #005a32;
+  --day-yellow-1: #fffbcc;
+  --day-yellow-2: #ffea8c;
+  --day-yellow-3: #f2d600;
+  --day-yellow-4: #b28600;
+  --day-purple-1: #e1d5f4;
+  --day-purple-2: #998dd9;
+  --day-purple-3: #6b4b94;
+  --day-purple-4: #3f2d5e;
+  --day-orange-1: #ffdfba;
+  --day-orange-2: #ffab4a;
+  --day-orange-3: #ff8c00;
+  --day-orange-4: #d65d00;
+  --day-pink-1: #ffdaec;
+  --day-pink-2: #ff6eac;
+  --day-pink-3: #d6007e;
+  --day-pink-4: #8f0038;
+  --day-gray-1: #acacac;
+  --day-gray-2: #767676;
+  --day-gray-3: #545454;
+  --day-gray-4: #333333;
+}
+
 body {
   background-color: #f9fafc;
 }
@@ -32,17 +69,108 @@ body {
   height: 12px;
   background-color: #ebedf0;
 }
-.day.level-1 {
-  background-color: #c6e48b;
+.day.level-1-red {
+  background-color: var(--day-red-1);
 }
-.day.level-2 {
-  background-color: #7bc96f;
+.day.level-2-red {
+  background-color: var(--day-red-2);
 }
-.day.level-3 {
-  background-color: #239a3b;
+.day.level-3-red {
+  background-color: var(--day-red-3);
 }
-.day.level-4 {
-  background-color: #196127;
+.day.level-4-red {
+  background-color: var(--day-red-4);
+}
+
+.day.level-1-green {
+  background-color: var(--day-green-1);
+}
+.day.level-2-green {
+  background-color: var(--day-green-2);
+}
+.day.level-3-green {
+  background-color: var(--day-green-3);
+}
+.day.level-4-green {
+  background-color: var(--day-green-4);
+}
+
+.day.level-1-blue {
+  background-color: var(--day-blue-1);
+}
+.day.level-2-blue {
+  background-color: var(--day-blue-2);
+}
+.day.level-3-blue {
+  background-color: var(--day-blue-3);
+}
+.day.level-4-blue {
+  background-color: var(--day-blue-4);
+}
+
+.day.level-1-yellow {
+  background-color: var(--day-yellow-1);
+}
+.day.level-2-yellow {
+  background-color: var(--day-yellow-2);
+}
+.day.level-3-yellow {
+  background-color: var(--day-yellow-3);
+}
+.day.level-4-yellow {
+  background-color: var(--day-yellow-4);
+}
+
+.day.level-1-purple {
+  background-color: var(--day-purple-1);
+}
+.day.level-2-purple {
+  background-color: var(--day-purple-2);
+}
+.day.level-3-purple {
+  background-color: var(--day-purple-3);
+}
+.day.level-4-purple {
+  background-color: var(--day-purple-4);
+}
+
+.day.level-1-orange {
+  background-color: var(--day-orange-1);
+}
+.day.level-2-orange {
+  background-color: var(--day-orange-2);
+}
+.day.level-3-orange {
+  background-color: var(--day-orange-3);
+}
+.day.level-4-orange {
+  background-color: var(--day-orange-4);
+}
+
+.day.level-1-pink {
+  background-color: var(--day-pink-1);
+}
+.day.level-2-pink {
+  background-color: var(--day-pink-2);
+}
+.day.level-3-pink {
+  background-color: var(--day-pink-3);
+}
+.day.level-4-pink {
+  background-color: var(--day-pink-4);
+}
+
+.day.level-1-gray {
+  background-color: var(--day-gray-1);
+}
+.day.level-2-gray {
+  background-color: var(--day-gray-2);
+}
+.day.level-3-gray {
+  background-color: var(--day-gray-3);
+}
+.day.level-4-gray {
+  background-color: var(--day-gray-4);
 }
 
 /* Styling for landing page */

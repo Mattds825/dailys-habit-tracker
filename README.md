@@ -3,6 +3,60 @@
 A habit tracker for your daily commitments to help you keep on top of your game.
 Dailys combines a sleek interface with a social component to make tracking your habit as easy and enjoyable as possible.
 
+## Table of Contents
+- [Project Goals](#project-goals)
+  - [User Friendly Interface and Seamless Habit Tracking](#user-friendly-interface-and-seamless-habit-tracking)
+  - [Social Engagement and Secure Authentication](#social-engagement-and-secure-authentication)
+  - [Data Visualizing](#data-visualizing)
+  - [Built for Scalability](#built-for-scalability)
+- [User Stories](#user-stories)
+  - [1. Habit Tracking and Reflection](#1-habit-tracking-and-reflection)
+  - [2. Social Engagement and Motivation](#2-social-engagement-and-motivation)
+  - [3. Progress Visualization and Insights](#3-progress-visualization-and-insights)
+- [User Requirements](#user-requirements)
+- [Features](#features)
+  - [Main App Features](#main-app-features)
+    - [Landing Page](#landing-page)
+    - [User Authentication](#user-authentication)
+    - [Explore Habits Page](#explore-habits-page)
+    - [Personal/User Habits Page](#personaluser-habits-page)
+    - [Habits CRUD Operations](#habits-crud-operations)
+    - [Habit Check-Ins](#habit-check-ins)
+    - [Habit Calendar Heatmap](#habit-calendar-heatmap)
+    - [Reaction to Habits and their Notifications](#reaction-to-habits-and-their-notifications)
+    - [Search Users](#search-users)
+    - [Follow/Unfollow Users](#followunfollow-users)
+    - [Admin Page](#admin-page)
+  - [Django App Structure](#django-app-structure)
+  - [Database design](#database-design)
+    - [User Model ERD](#user-model-erd)
+    - [Habit Model ERD](#habit-model-erd)
+    - [CheckIn Model ERD](#checkin-model-erd)
+    - [Reaction Model ERD](#reaction-model-erd)
+    - [FollowerLookup Model ERD](#followerlookup-model-erd)
+    - [The Models below are only for the landing page and not connected to the Habit Tracking](#the-models-below-are-only-for-the-landing-page-and-not-connected-to-the-habit-tracking)
+    - [Complete Entity Relationship Diagram](#complete-entity-relationship-diagram)
+- [User Features](#user-features)
+- [UI / UX](#ui--ux)
+  - [Mockups](#mockups)
+  - [Pages](#pages)
+    - [Login Page](#login-page)
+    - [Register Page](#register-page)
+    - [Logout Page](#logout-page)
+    - [Landing Page](#landing-page)
+    - [Explore Page](#explore-page)
+    - [Personal Habits Page / User Habit Page](#personal-habits-page--user-habit-page)
+    - [Search Page](#search-page)
+  - [Structure / Navigation](#structure--navigation)
+  - [Accessibility](#accessibility)
+  - [Defensive Design](#defensive-design)
+- [Deployment](#deployment)
+- [Testing](#testing)
+- [Future Consideration](#future-consideration)
+- [Credits](#credits)
+  - [Technologies](#technologies)
+  - [Resources](#resources)
+
 ## Project Goals
 
 ### User Friendly Interface and Seamless Habit Tracking
@@ -13,7 +67,7 @@ The web app features a clean and user-friendly interface that ensures effortless
 
 To encourage consistency, Dailys incorporates a social engagement element where users can react to each other’s habit check-ins, offering motivation and support. Secure authentication via email ensures a safe experience.
 
-### Data Visualizing
+### Data Visualizing
 
 For better progress tracking, the app includes a calendar heat map that visually represents habit consistency over time, helping users identify streaks and trends.  
 
@@ -114,7 +168,13 @@ When user is on another user's habit page, the habit is show with the reaction s
 User can create Habits with title, description, color and visibility.
 They do this by clicking the 'Create new Habit' Button, which opens a form to create the habit where the button was
 
-This forms are made with **django crispy forms**
+The Visibility can be set to Private, Public or Following, and the mean the following:
+
+- Private: Only you, the user creating the habit can see the habit
+- Public: Every other user can see this habit in the explore page
+- Following: Only users that follow you can see this habit
+
+The habit creation form is made with **django crispy forms**
 
 ![create habit btn](/documentation/features/new-habit-btn.png)
 
@@ -163,7 +223,11 @@ This calendar can be set to year, month and week viewing modes.
 
 The day squares are darker depending on the amount of checkins for that day
 
-![calendar day color gradient](/documentation/features/cal-color-gradient.png)
+![calendar day color gradient](/documentation/features/cal-color-gradient.png)\
+
+The color of the day square can be set by the user when creating or editing a habit
+
+![calendar day different colors](/documentation/features/cal-different-colors.png)
 
 #### Reaction to Habits and their Notifications
 
@@ -443,6 +507,20 @@ These are some features that at some point were considered for this project but 
 Although I am happy with the current implement of the heatmap calendar, ideally I would have tried to make it have a more efferent generation function 
 and that the year view would end in the current month instead of going from January to February
 
+**Do more with check-in data**
+
+In the future it would be nice to have more visualization forms other that the calendar heatmap.  In addition to this currently the checkin notes are unseen,
+it would be nice to be able to do something with them for the user to see
+
+Also in consideration was to do some data visualization for all the habits together.
+
+**More robust following system**
+
+I also considered making a more robust following system, maybe one where the user has to approve the follow request. But the solution I settles on 
+resembles the instagram system for public accounts.
+
+Also given more time I would implement a list to see all followers and following for each user
+
 ## Credits
 
 ### Technologies 
@@ -456,6 +534,7 @@ and that the year view would end in the current month instead of going from Janu
 - django SummerNote - styling django admin panel
 - django crispy forms - for handling and creating forms
 - Sketch App - Used to create Mockups
+- [Dbdiagram.io](https://dbdiagram.io/d) - used to create database schema
 
 ### Resources 
 

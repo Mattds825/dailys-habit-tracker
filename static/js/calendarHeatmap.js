@@ -7,6 +7,19 @@
  * used chatGPT to generate starter code
  */
 
+// CHOSEN_COLOR = ((0, "Red"), (1, "Green"), (2, "Blue"), (3, "Yellow"), (4, "Purple"), (5, "Orange"), (6, "Pink"), (7, "Gray"))
+
+const colorsMap = {
+  0: "red",
+  1: "green",
+  2: "blue",
+  3: "yellow",
+  4: "purple",
+  5: "orange",
+  6: "pink",
+  7: "gray",
+};
+
 const heatmaps = document.getElementsByClassName("calHeatmap");
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -27,6 +40,10 @@ function setView(view, heatmapId) {
 
   const heatmap = document.getElementById(heatmapId);
 
+  const dayColor = document.getElementById(heatmapId).dataset.dayColor;
+
+  console.log(dayColor);
+
   // get the raw data from the heatmap element
   const rawData = document
     .getElementById(heatmapId)
@@ -43,7 +60,7 @@ function setView(view, heatmapId) {
     .filter((date) => date !== null);
 
   // generate the calendar heatmap based on the view
-  generateCalendar(view, heatmap, checkins, heatmapId);
+  generateCalendar(view, heatmap, checkins, heatmapId, colorsMap[dayColor]);
 }
 
 
@@ -72,7 +89,7 @@ function getContributionLevel(date, contributions) {
  * @param {Object} contributions - An object containing the contribution data.
  * @param {string} heatmapId - The ID of the heatmap.
  */
-function generateCalendar(view, calendarEl, contributions, heatmapId) {
+function generateCalendar(view, calendarEl, contributions, heatmapId, dayColor) {
   calendarEl.innerHTML = `
     <div class="cal-controls col-12">
         <div class="btn-group" role="group" aria-label="View Controls">
@@ -143,7 +160,7 @@ function generateCalendar(view, calendarEl, contributions, heatmapId) {
       const dayEl = document.createElement("div");
       dayEl.classList.add("day");
       let level = getContributionLevel(formattedDate, contributions);
-      if (level > 0) dayEl.classList.add(`level-${level}`);
+      if (level > 0) dayEl.classList.add(`level-${level}-${dayColor}`);
       dayEl.setAttribute("data-toggle", "tooltip");
       dayEl.setAttribute("data-placement", "top");
       dayEl.setAttribute("title", `${level} contributions on ${date.toDateString()}`);
@@ -174,7 +191,7 @@ function generateCalendar(view, calendarEl, contributions, heatmapId) {
       const dayEl = document.createElement("div");
       dayEl.classList.add("day");
       let level = getContributionLevel(date, contributions);
-      if (level > 0) dayEl.classList.add(`level-${level}`);
+      if (level > 0) dayEl.classList.add(`level-${level}-${dayColor}`);
       dayEl.setAttribute("data-toggle", "tooltip");
       dayEl.setAttribute("data-placement", "top");
       dayEl.setAttribute("title", `${level} contributions on ${date}`);

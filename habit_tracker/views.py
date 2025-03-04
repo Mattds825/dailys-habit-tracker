@@ -128,11 +128,7 @@ def user_habits(request, user):
     # annotate each habit with a list of check_in check_in_on dates in the format yyyy-mm-dd
     for h in habits:
         h.check_in_dates = [c.checked_in_on.strftime('%Y-%m-%d') for c in h.check_ins.all()]
-     
-    # paginate habits   
-    paginator = Paginator(habits, 5)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
+        
     
     # annotate user with new is_followed boolean
     if user != request.user.username:
@@ -141,6 +137,16 @@ def user_habits(request, user):
         for a in FollowerLookup.objects.filter(user=request.user):
             if a.followed_user == user:
                 user.is_followed = True
+        if not user.is_followed:
+            # only show public habits
+            habits = [h for h in habits if h.visibility == 2]
+    
+    
+     # paginate habits   
+    paginator = Paginator(habits, 5)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    
 
     new_reactions = Reaction.objects.filter(
         to_habit__user=request.user, is_seen=False)
@@ -158,6 +164,7 @@ def user_habits(request, user):
                 new_habit.save()
                 messages.add_message(
                     request, messages.SUCCESS, "Habit added successfully")
+        
 
     habit_form = HabitForm()
     checkin_form = CheckInForm()
@@ -231,6 +238,8 @@ def check_in(request, user, habit_id):
     habits = [h for h in queryset if h.user.username == user]
     habit = get_object_or_404(Habit, id=habit_id)
 
+    # check if habit is associated with the user and if user is logged in
+    # if request is POST then add check_in
     if habit.user == request.user:
         if request.method == "POST":
             check_in_form = CheckInForm(data=request.POST)
@@ -320,7 +329,7 @@ def search_users(request, user):
 def follow_user(request, user):
     """
     follow a user
-    and redirect to search_users
+    and redirect to same page 
     """
 
     followed_user = get_object_or_404(User, username=user)
@@ -334,13 +343,14 @@ def follow_user(request, user):
         messages.add_message(request, messages.SUCCESS,
                              f"started following {user}")
 
-    return HttpResponseRedirect(reverse("search_users", args=[user]))
+    # return HttpResponseRedirect(reverse("search_users", args=[user]))
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
 def unfollow_user(request, user):
     """
     unfollow a user
-    and redirect to search_users
+    and redirect to same page
     """
 
     followed_user = get_object_or_404(User, username=user)
@@ -354,4 +364,5 @@ def unfollow_user(request, user):
         messages.add_message(request, messages.SUCCESS,
                              f"stopped following {user}")
 
-    return HttpResponseRedirect(reverse("search_users", args=[user]))
+    # return HttpResponseRedirect(reverse("search_users", args=[user]))
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
