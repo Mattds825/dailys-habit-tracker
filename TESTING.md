@@ -102,6 +102,12 @@ on accessibility, UI/UX and database functionality defined for this project
 | Create a Daily Habit | User can set habit visibility (private, public, followers only) | Users can set habit visibility to private, public, or followers only | Select different visibility options and save the habit | |
 | Create a Daily Habit | User receives confirmation message after creating a habit | Users receive a confirmation message after creating a habit | Create a habit and check for confirmation message | |
 | Create a Daily Habit | Habit appears in user's habit list upon creation | Created habit appears in the user's habit list | Create a habit and check the habit list | |
+| Display Habit Data | User can see all check-ins visualized in habit elements | Users can see all check-ins visualized in habit elements | Check the habit elements for visualized check-ins | |
+| Display Habit Data | User can see the total number of check-ins for a habit | Users can see the total number of check-ins for a habit | Check the habit elements for total check-ins count | |
+| Display Habit Data | User can see the number of check-ins today for a habit | Users can see the number of check-ins today for a habit | Check the habit elements for today's check-ins count | |
+| Display Habit Data | User can see the list of dates checked in for a habit | Users can see the list of dates checked in for a habit | Check the habit elements for the list of check-in dates | |
+| Display Habit Data | User can see the current streak of consecutive check-in days | Users can see the current streak of consecutive check-in days | Check the habit elements for the current streak count | |
+| Display Habit Data | User can see the amount of each reaction to a habit | Users can see the amount of each reaction to a habit | Check the habit elements for reaction counts | |
 | Modify or Delete a Habit | Form appears when clicking the "Edit" button | The form to edit a habit appears when clicking the "Edit" button | Click the "Edit" button and check if the form appears | |
 | Modify or Delete a Habit | Form is filled with correct information when editing | The form is pre-filled with the habit's current information when editing | Click the "Edit" button and check if the form is pre-filled with the correct information | |
 | Modify or Delete a Habit | Form disappears when clicking the "Cancel" button | The form to edit a habit disappears when clicking the "Cancel" button | Click the "Cancel" button and check if the form disappears | |

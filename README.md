@@ -81,9 +81,13 @@ These pages should have a clean and coherent UI/UX
 
 User should be able to see all the habits from users they follow and from users that set the habit to "public" visibility 
 
-Logged in user can navigate to, a habit user's profile by clicking their username 
+Logged in user can navigate to a habit user's profile by clicking their username, they can also view if they follow this user or not
+
+![username hyperlink](/documentation/features/username-hyperlink.png)
 
 Logged in user can react to habits on the list
+
+![reaction element](/documentation/features/reaction-el.png)
 
 Should have a clean an easy to use UI/UX
 
@@ -118,43 +122,104 @@ This forms are made with **django crispy forms**
 |--------------|-------------|
 | ![create habit form](documentation/features/new-habit-form.png) | ![create habit form mobile](documentation/features/new-habit-form-mobile.png) |
 
-They can edit each of these fields and they can delete them.
+The Users can edit each of these fields by clicking the edit button, this opens the form with populated data from the habit, the user can change this data and submit or cancel
 
-The Data is shown in the habit card in both the personal habits and explore habits page
+![edit and delete buttons](/documentation/features/edit-delete-btn.png)
+
+![edit habit form](/documentation/features/editing-habit-form.png)
+
+The Users can also delete the habit by clicking the the delete button, which will show a confirmation dialogue then delete the habit
+
+![delete habit confirmation](/documentation/features/delete-habit-confirmation.png)
+
+The Data is shown in the habit elements in both the personal habits and explore habits page
+
+This data includes all the checkins visualized, the total number of checkin, the amount of checkins today, the list date checked in, the current streak
+of consecutive checkin days and the amount fo each reaction to the habit
+
+![habit element](/documentation/features/habit-element.png)
 
 #### Habit Check-Ins
 
 User can check in to a habit and leave a note. they can do this aas much aas they want each day. this data will be show in the calendar 
 
+![check in button](/documentation/features/check-in-btn.png)
+
+![check in form](/documentation/features/check-in-form.png)
+
 #### Habit Calendar Heatmap
 
 Each user habit in the personal habits page and the explore page contain a calendar heatmap that visualizes the check-in data for that habit
 
-This calendar can be set to year, month and week viewing modes.
+A user can hover over the day box to view information about the checkins that day
+
+![check in calendar popup](/documentation/features/check-in-calendar-popup.png)
+
+This calendar can be set to year, month and week viewing modes. 
+
+| Year | Month | Week |
+| ----- | ----- | ----- |
+| ![calendar year view](/documentation/features/cal-year.png) | ![calendar month view](/documentation/features/cal-month.png) | ![calendar week view](/documentation/features/cal-week.png) |
+
+The day squares are darker depending on the amount of checkins for that day
+
+![calendar day color gradient](/documentation/features/cal-color-gradient.png)
 
 #### Reaction to Habits and their Notifications
 
-User can choose from a range of reaction to a habit. Once reacted, the other user will see this as a notification they can dismiss
+User can choose from a range of reaction to a habit give to a habit. 
+
+![reactions element](/documentation/features/reaction-el.png)
+
+The reactions are show at the bottom of each habit card
+
+
+Once reacted, the other user will see this as a notification they can dismiss
 (note: not realtime notification)
+
+![notification button](/documentation/features/notification-btn.png)
+
+![notifications list](/documentation/features/notifications-list.png)
 
 #### Search Users
 
 User should be able to enter a search term and get a list of users whose username match that term.
+This search bar is found in the explore page and in the search results page
 
-User can follow the users returned in the list.
+![user search bar](/documentation/features/user-searchbar.png)
+
+Logged in user can follow and unfollow the users returned in the list.
+
+![user search list](/documentation/features/user-search-list.png)
 
 #### Follow/Unfollow Users
 
 User can follow and unfollow other users. This can be done in the search page or in the other user's profile page
 
+![user search list](/documentation/features/user-search-list.png)
+
 User can see a badge on the explore page that shows if users are followed or not
+
+![check in button](/documentation/features/check-in-btn.png)
 
 #### Admin Page
 
 The superuser should be able to access the admin page, from there they can manage all the habits and check ins data.
 They can also add or remove users
 
+![admin page](/documentation/pages/admin-page.png)
+
 They should also have access to change the data displayed in the landing page
+
+![admin landing page](/documentation/features/admin-landing.png)
+
+The admin pages user django-summernote to allow for rich text and allow for better filtering and searching
+
+![summernote rich text](/documentation/features/summernote-rich-text.png)
+
+![summernote filtering](/documentation/features/summer-note-filtering.png)
+
+![summernote list](/documentation/features/summer-note-list.png)
 
 ### Django App Structure
 
@@ -282,9 +347,31 @@ In this section are screenshots for each page on a desktop and mobile.
 
 #### Explore Page
 
+| Desktop View | Mobile View |
+|--------------|-------------|
+| ![explore page desktop](documentation/pages/explore-page.png) | ![landing page mobile](documentation/pages/explore-page-mobile.png) |
+
 #### Personal Habits Page / User Habit Page
 
+This Both use the same template and conditionally render different elements based on if the logged in user is matches the page user
+
+**Personal**
+
+| Desktop View | Mobile View |
+|--------------|-------------|
+| ![personal page desktop](documentation/pages/personal-page.png) | ![personal page mobile](documentation/pages/personal-page-mobile.png) |
+
+**Other User**
+
+| Desktop View | Mobile View |
+|--------------|-------------|
+| ![user page desktop](documentation/pages/user-page.png) | ![user page mobile](documentation/pages/user-page-mobile.png) |
+
 #### Search Page
+
+| Desktop View | Mobile View |
+|--------------|-------------|
+| ![search page desktop](documentation/pages/search-page.png) | ![search page mobile](documentation/pages/search-page-mobile.png) |
 
 ### Structure / Navigation
 
@@ -336,6 +423,8 @@ they will be redirected back to the landing page
 ### Defensive Design
 
 **Confirmation Dialogues when performing database operations**
+
+![confirm delete habit](/documentation/features/delete-habit-confirmation.png)
 
 ## Deployment
 

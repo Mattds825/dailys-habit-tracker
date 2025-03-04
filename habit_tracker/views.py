@@ -1,6 +1,7 @@
 from datetime import timedelta
 from django.shortcuts import render, get_list_or_404, reverse, get_object_or_404
 from django.views import generic
+from django.core.paginator import Paginator
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.db.models import Count, Q
@@ -46,17 +47,28 @@ def explore_habits(request):
 
     habits = queryset.order_by('-created_on')
     
+    # append list of habits with visibility 1 that are associated with users that the logged in user is following
+    following_users = FollowerLookup.objects.filter(user=request.user)
+    following_users = [f.followed_user for f in following_users]
+    habits = habits | Habit.objects.filter(visibility=1, user__in=following_users)
+    
     # get list of followed_users from FollowerLookup 
     following_users = FollowerLookup.objects.filter(user=request.user)        
     following_users = [f.followed_user for f in following_users]
 
     today = now().date()
-    for h in habits:
+     # annotate habits with streak_number to show the current streak of consecutive check-ins
+    for h in habits:        
         h.streak_number = 0
         streak = 0
+        check_day = today
         for c in h.check_ins.order_by('-checked_in_on'):
-            if c.checked_in_on.date() == today:
+            # skip if multiple check-ins on the same day
+            if c.checked_in_on.date() == check_day + timedelta(days=1):
+                pass                 
+            elif c.checked_in_on.date() == check_day:
                 streak += 1
+                check_day = check_day - timedelta(days=1)            
             else:
                 break
         h.streak_number = streak
@@ -64,10 +76,16 @@ def explore_habits(request):
     # annotate each habit with a list of check_in check_in_on dates in the format yyyy-mm-dd
     for h in habits:
         h.check_in_dates = [c.checked_in_on.strftime('%Y-%m-%d') for c in h.check_ins.all()]
+        
+    # paginate habits   
+    paginator = Paginator(habits, 5)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
 
     return render(request, 'habit_tracker/explore_habits.html',
                     {
                     'habits': habits, 
+                    'page_obj': page_obj,
                     'following_users': following_users
                     }
                 )
@@ -110,6 +128,11 @@ def user_habits(request, user):
     # annotate each habit with a list of check_in check_in_on dates in the format yyyy-mm-dd
     for h in habits:
         h.check_in_dates = [c.checked_in_on.strftime('%Y-%m-%d') for c in h.check_ins.all()]
+     
+    # paginate habits   
+    paginator = Paginator(habits, 5)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
     
     # annotate user with new is_followed boolean
     if user != request.user.username:
@@ -142,6 +165,7 @@ def user_habits(request, user):
     # user = get_list_or_404(queryset, user=user)
     return render(request, 'habit_tracker/user_habits.html',
                   {'habits': habits,
+                    'page_obj': page_obj,
                    'h_user': user,
                    'habit_form': habit_form,
                    'checkin_form': checkin_form,
@@ -152,14 +176,14 @@ def user_habits(request, user):
 
 def edit_habit(request, user, habit_id):
     """
-    edits a habit and redirects to user_habits
+    edits a habit 
+    redirects to user_habits
     """
     queryset = Habit.objects.all()
     habits = [h for h in queryset if h.user.username == user]
-    habit = get_object_or_404(Habit, id=habit_id)
-
-    print("edit habit")
-
+    habit = get_object_or_404(Habit, id=habit_id)   
+    
+    # check if habit is associated with the user and if user is logged in and if request is POST then update habit   
     if habit.user == request.user:
         if request.method == "POST":
             habit_form = HabitForm(data=request.POST, instance=habit)
@@ -183,11 +207,13 @@ def edit_habit(request, user, habit_id):
 def delete_habit(request, user, habit_id):
     """
     delete a habit
+    and redirect to user_habits    
     """
     queryset = Habit.objects.all()
     habits = [h for h in queryset if h.user.username == user]
     habit = get_object_or_404(Habit, id=habit_id)
-
+    
+    #  check if habit is associated with the user and if user is logged in
     if habit.user == request.user:
         habit.delete()
         messages.add_message(request, messages.SUCCESS,
@@ -199,6 +225,7 @@ def delete_habit(request, user, habit_id):
 def check_in(request, user, habit_id):
     """
     check in to a habit
+    and redirect to user_habits
     """
     queryset = Habit.objects.all()
     habits = [h for h in queryset if h.user.username == user]
@@ -221,6 +248,7 @@ def check_in(request, user, habit_id):
 def user_reaction(request, habit_id, reaction_type):
     """
     add a reaction to a habit
+    and redirect to explore
     """
     queryset = Habit.objects.all()
     habit = get_object_or_404(Habit, id=habit_id)
@@ -245,6 +273,7 @@ def user_reaction(request, habit_id, reaction_type):
 def dismiss_reaction(request, user, reaction_id):
     """
     dismiss a reaction
+    and redirect to user_habits
     """
 
     # make sure correct user is dismissing the reaction
@@ -274,8 +303,7 @@ def search_users(request, user):
         current_user = request.user
 
     already_following = FollowerLookup.objects.filter(user=current_user)
-
-    print(already_following)
+    
 
     # annotate users boolean is_followed if the user is in the already_followed.user_followed list
     for u in users:
@@ -283,9 +311,6 @@ def search_users(request, user):
         for a in already_following:
             if a.followed_user == u:
                 u.is_followed = True
-
-    for u in users:
-        print(u.is_followed)
 
     return render(request, 'habit_tracker/search_users.html',
                   {'users': users}
@@ -295,6 +320,7 @@ def search_users(request, user):
 def follow_user(request, user):
     """
     follow a user
+    and redirect to search_users
     """
 
     followed_user = get_object_or_404(User, username=user)
@@ -314,6 +340,7 @@ def follow_user(request, user):
 def unfollow_user(request, user):
     """
     unfollow a user
+    and redirect to search_users
     """
 
     followed_user = get_object_or_404(User, username=user)
