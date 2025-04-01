@@ -1,5 +1,7 @@
 # Dailys Habit Tracker
 
+![devices mockups](/documentation/mockups/all-devices-black.png)
+
 A habit tracker for your daily commitments to help you keep on top of your game.
 Dailys combines a sleek interface with a social component to make tracking your habit as easy and enjoyable as possible.
 
