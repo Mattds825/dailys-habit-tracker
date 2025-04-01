@@ -118,10 +118,10 @@
                         </div>
                         <div class="col">
                             {% if user.is_authenticated and user.username == h_user %}
-                            <button class="btn btn-primary btn-sm btn-edit" habit_id="{{ habit.id }}" 
-                            habit_name="{{ habit.title }}" habit_description="{{ habit.description }}" habit_color="{{ habit.color }}" 
-                            habit_visibility="{{ habit.visibility }}" data_user="{{ user.username }}">edit</button>
-                            <button class="btn btn-danger btn-sm btn-delete" habit_id="{{ habit.id }}">delete</button>
+                            <button class="btn btn-primary btn-sm btn-edit" data-habit-id="{{ habit.id }}" 
+                            data-habit-name="{{ habit.title }}" data-habit-description="{{ habit.description }}" data-habit-color="{{ habit.color }}" 
+                            data-habit-visibility="{{ habit.visibility }}" data-user="{{ user.username }}">edit</button>
+                            <button class="btn btn-danger btn-sm btn-delete" data-habit-id="{{ habit.id }}">delete</button>
                             {% else %}
                             <p>React:</p>
                             <div class="btn-group" role="group" aria-label="Basic example">
@@ -218,7 +218,7 @@ aria-labelledby="checkInModalLabel" aria-hidden="true">
         {{ checkin_form | crispy }}
         {% csrf_token %}
         <button type="button" class="btn btn-secondary btn-sm"
-        data-bs-dismiss="modal" formnovalidate>Close</button>
+        data-bs-dismiss="modal">Close</button>
         <button id="checkInConfirm" type="submit"
         class="btn btn-success btn-sm">Submit</button>                
        </form>

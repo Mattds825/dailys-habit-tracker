@@ -7,14 +7,14 @@
 <div class="container mt-5 d-flex flex-column justify-content-center align-items-center">
   <div class="hero">
       <h1 class="font-weight-bold">{{ about.heading }}</h1>
-      <p class="lead"> {{ about.subheading | safe }}</p>      
+      {{ about.subheading | safe }}      
   </div>
   
   <div class="features row text-center mt-5">
     {% for feature in features %}
       <div class="col-md-4 feature-box bg-light p-4">
         <h4>{{ feature.feature_title }}</h4>
-        <p>{{ feature.feature_description | safe}}</p>
+        {{ feature.feature_description | safe}}
       </div>        
     {% endfor%}
     

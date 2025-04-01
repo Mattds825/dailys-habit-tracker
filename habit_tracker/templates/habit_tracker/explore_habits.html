@@ -15,7 +15,7 @@
 <div class="container-fluid h-100">
     <div class="col-md-6 mx-auto my-3">
         <div class="input-group">
-            <input id="searchUserInput" type="text" class="form-control" placeholder="username" aria-label="username" aria-describedby="basic-addon2">
+            <input id="searchUserInput" type="text" class="form-control" placeholder="username" aria-label="username">
             <div class="input-group-append">
               <button id="searchUserBtn" class="btn btn-outline-primary" type="button">Search Users</button>
             </div>
@@ -55,8 +55,7 @@
                                 <p>{{ reaction.reaction_type }}</p>
                                 {% endfor %}
                             </div>
-                            <!-- /. Reaction Element -->                                   
-                            </p>
+                            <!-- /. Reaction Element -->                                                               
                         </div>
                     </div>
                 </div>
@@ -141,7 +140,7 @@ aria-labelledby="reactModalLabel" aria-hidden="true">
        <form id="reactForm" method="post">
         {% csrf_token %}
         <button type="button" class="btn btn-secondary btn-sm"
-        data-bs-dismiss="modal" formnovalidate>Cancel</button>
+        data-bs-dismiss="modal">Cancel</button>
         <button id="reactConfirm" type="submit"
         class="btn btn-success btn-sm">Confirm</button>                
        </form>

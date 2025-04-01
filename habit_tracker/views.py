@@ -106,8 +106,7 @@ def user_habits(request, user):
     ).order_by('-created_on')
 
     # annotate habits with streak_number to show the current streak of consecutive check-ins
-    for h in habits:
-        print(h.id, h.title)
+    for h in habits:        
         h.streak_number = 0
         streak = 0
         check_day = today
@@ -150,8 +149,6 @@ def user_habits(request, user):
 
     new_reactions = Reaction.objects.filter(
         to_habit__user=request.user, is_seen=False)
-
-    # print(new_reactions.count())
 
     #  check if user is logged in and if user is the same as the user in the url
     #  add habit form
@@ -261,8 +258,6 @@ def user_reaction(request, habit_id, reaction_type):
     """
     queryset = Habit.objects.all()
     habit = get_object_or_404(Habit, id=habit_id)
-
-    print("reaction")
 
     # check if reaction is from the user
     if habit.user != request.user:

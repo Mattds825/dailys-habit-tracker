@@ -43,8 +43,6 @@ if (
   });
 }
 
-// console.log("length",deleteButtons.length);
-
 /**
  * Modified code from Code Institute's Blog project
  * Initializes deletion functionality for the provided delete buttons.
@@ -60,7 +58,7 @@ if (
 for (let button of deleteButtons) {
   button.addEventListener("click", (e) => {
     console.log("clicked delete btn");
-    let habitId = e.target.getAttribute("habit_id");
+    let habitId = e.target.getAttribute("data-habit-id");
     deleteConfirm.href = `delete_habit/${habitId}`;
     deleteModal.show();
   });
@@ -68,14 +66,12 @@ for (let button of deleteButtons) {
 
 for(let button of editButtons) {
     button.addEventListener("click", (e) => {
-        let habitId = e.target.getAttribute("habit_id");
-        let habit_name = e.target.getAttribute("habit_name");
-        let habit_description = e.target.getAttribute("habit_description");
-        let habit_color = e.target.getAttribute("habit_color");
-        let habit_visibility = e.target.getAttribute("habit_visibility");         
-        let username = e.target.getAttribute("data_user");
-
-        console.log("clicked edit btn2", habitId, username);
+        let habitId = e.target.getAttribute("data-habit-id");
+        let habit_name = e.target.getAttribute("data-habit-name");
+        let habit_description = e.target.getAttribute("data-habit-description");
+        let habit_color = e.target.getAttribute("data-habit-color");
+        let habit_visibility = e.target.getAttribute("data-habit-visibility");         
+        let username = e.target.getAttribute("data-user");
 
         habitForm.style.display = "block";
         createHabitBtn.style.display = "none";
@@ -94,9 +90,6 @@ for (let button of checkInButtons) {
   button.addEventListener("click", (e) => {
     let habitId = e.target.getAttribute("data-habit-id");    
 
-    console.log("clicked checkin btn", habitId);
-
-    // checkInConfirm.href = `check_in/${habitId}`;
     checkInModal.show();
     checkInForm.setAttribute("action", `check_in/${habitId}/`);
   });

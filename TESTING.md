@@ -162,58 +162,67 @@ on accessibility, UI/UX and database functionality defined for this project. The
 
 ## HTML Validation 
 
+W3C HTML Validation was done on the main pages of the web app. 
+
+Validation was done by copy and pasting the source of the page from the inspector into the validator
+
+Below are the results of the validation tests
+
 ### Landing Page
 
-### Login Page
+**No Errors**
 
-### Logout Page
-
-### Register Page
+![landing page validation](/documentation/html_validation/landing_page_html_validation.png)
 
 ### Explore Page
 
+**No Errors**
+
+![explore page validation](/documentation/html_validation/explore_page_html_validation.png)
+
 ### Personal Page
+
+**No Errors**
+
+![personal page validation](/documentation/html_validation/personal_page_html_validation.png)
 
 ### User Habit Page
 
-### Search User Page
+**No Errors**
+
+![user habit page validation](/documentation/html_validation/user_habit_page_html_validation.png)
 
 ## CSS Validation 
 
 this is for the [style.css](/static/css/style.css) file
 
-## Accessibility Tests
-
-### Landing Page
-
-### Login Page
-
-### Logout Page
-
-### Register Page
-
-### Explore Page
-
-### Personal Page
-
-### User Habit Page
-
-### Search User Page
+--> **No Errors**
 
 ## Lighthouse Tests
 
+I am pretty happy with the overall score of these pages with some being above 90 and the lowest 78. 
+The pages that load the calendar heatmap have a lower score due to the amount of data being loaded.
+
 ### Landing Page
 
-### Login Page
-
-### Logout Page
-
-### Register Page
+| Desktop | Mobile |
+|---------|--------|
+| ![landing page desktop](/documentation/lighthouse_tests/landing_page_lighthouse_test_desktop.png) | ![landing page mobile](/documentation/lighthouse_tests/landing_page_lighthouse_test_mobile.png) |
 
 ### Explore Page
 
+| Desktop | Mobile |
+|---------|--------|
+| ![explore page desktop](/documentation/lighthouse_tests/explore_page_lighthouse_test_desktop.png) | ![explore page mobile](/documentation/lighthouse_tests/explore_page_lighthouse_test_mobile.png) |
+
 ### Personal Page
+
+| Desktop | Mobile |
+|---------|--------|
+| ![personal page desktop](/documentation/lighthouse_tests/personal_page_lighthouse_test_desktop.png) | ![personal page mobile](/documentation/lighthouse_tests/personal_page_lighthouse_test_mobile.png) |
 
 ### User Habit Page
 
-### Search User Page
+| Desktop | Mobile |
+|---------|--------|
+| ![user habit page desktop](/documentation/lighthouse_tests/user_habit_page_lighthouse_test_desktop.png) | ![user habit page mobile](/documentation/lighthouse_tests/user_habit_page_lighthouse_test_mobile.png) |
