@@ -541,3 +541,4 @@ Also given more time I would implement a list to see all followers and following
 - CodeInstitute blog project [repo](https://github.com/Code-Institute-Solutions/blog) and walkthrough used as guidance
 - [Bootstrap Docs](https://getbootstrap.com/docs/4.0/)
 - [W3C HTML Validator](https://validator.w3.org/) - Used to validate HTML
+- [W3C CSS Validator](https://jigsaw.w3.org/css-validator/) - Used to validate CSS
